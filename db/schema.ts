@@ -7,7 +7,6 @@ import {
     timestamp,
     date,
     primaryKey,
-    unique,
     uuid,
     AnyPgColumn,
 } from "drizzle-orm/pg-core";
@@ -20,7 +19,7 @@ export const productBatch = pgTable("product_batches", {
         .references(() => product.id, { onDelete: "cascade" }),
     batchId: uuid("batch_id")
         .notNull()
-        .references(() => batch.id, { onDelete: "cascade" }),
+        .references(() => manufacturedBatch.id, { onDelete: "cascade" }),
     recipeId: uuid("recipe_id")
         .notNull()
         .references(() => recipe.id, { onDelete: "cascade" }),
@@ -48,10 +47,18 @@ export const recipe = pgTable("recipes", {
         .notNull()
         .references(() => product.id, { onDelete: "cascade" }),
     isObsolete: boolean("is_obsolete").notNull(),
-    insertedAt: timestamp("inserted_at", { mode: "date", precision: 3, withTimezone: false })
+    insertedAt: timestamp("inserted_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
         .notNull()
         .defaultNow(),
-    updatedAt: timestamp("updated_at", { mode: "date", precision: 3, withTimezone: false })
+    updatedAt: timestamp("updated_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
         .notNull()
         .$onUpdate(() => new Date()),
 });
@@ -68,16 +75,27 @@ export const recipeRelations = relations(recipe, ({ one, many }) => ({
 export const configuration = pgTable("configurations", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
     version: integer("version").notNull(),
-    insertedAt: timestamp("inserted_at", { mode: "date", precision: 3, withTimezone: false })
+    insertedAt: timestamp("inserted_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
         .notNull()
         .defaultNow(),
-    updatedAt: timestamp("updated_at", { mode: "date", precision: 3, withTimezone: false })
+    updatedAt: timestamp("updated_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
         .notNull()
         .$onUpdate(() => new Date()),
 });
 
 export const product = pgTable("products", {
-    id: uuid("id").notNull().primaryKey().defaultRandom(), // todo: is from base table ingredient
+    id: uuid("id")
+        .notNull()
+        .primaryKey()
+        .references(() => ingredient.id, { onDelete: "cascade" }),
     currentRecipeId: uuid("current_recipe_id").references((): AnyPgColumn => recipe.id),
     massValue: doublePrecision("mass_value").notNull(),
     massUnitId: uuid("mass_unit_id").notNull(),
@@ -85,6 +103,10 @@ export const product = pgTable("products", {
 });
 
 export const productRelations = relations(product, ({ one, many }) => ({
+    ingredient: one(ingredient, {
+        fields: [product.id],
+        references: [ingredient.id],
+    }),
     recipes: many(recipe),
     currentRecipe: one(recipe, {
         fields: [product.currentRecipeId],
@@ -100,7 +122,10 @@ export const customer = pgTable("customers", {
 });
 
 export const rawMaterial = pgTable("raw_materials", {
-    supplyItemId: uuid("supply_item_id").notNull().primaryKey(),
+    id: uuid("id").notNull().primaryKey().defaultRandom(),
+    supplyItemId: uuid("supply_item_id")
+        .notNull()
+        .references(() => supplyItem.id, { onDelete: "cascade" }),
     receivedBatchesId: uuid("received_batches_id")
         .notNull()
         .references(() => receivedBatch.id, { onDelete: "cascade" }),
@@ -109,10 +134,18 @@ export const rawMaterial = pgTable("raw_materials", {
     overrideIsVegetarian: boolean("override_is_vegetarian"),
     overrideIsTurkishHalal: boolean("override_is_turkish_halal"),
     overrideIsJewishKosher: boolean("override_is_jewish_kosher"),
-    insertedAt: timestamp("inserted_at", { mode: "date", precision: 3, withTimezone: false })
+    insertedAt: timestamp("inserted_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
         .notNull()
         .defaultNow(),
-    updatedAt: timestamp("updated_at", { mode: "date", precision: 3, withTimezone: false })
+    updatedAt: timestamp("updated_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
         .notNull()
         .$onUpdate(() => new Date()),
 });
@@ -133,10 +166,18 @@ export const ingredient = pgTable("ingredients_bt", {
     number: text("number").notNull().unique(),
     name: text("name").notNull(),
     description: text("description"),
-    insertedAt: timestamp("inserted_at", { mode: "date", precision: 3, withTimezone: false })
+    insertedAt: timestamp("inserted_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
         .notNull()
         .defaultNow(),
-    updatedAt: timestamp("updated_at", { mode: "date", precision: 3, withTimezone: false })
+    updatedAt: timestamp("updated_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
         .notNull()
         .$onUpdate(() => new Date()),
 });
@@ -146,9 +187,20 @@ export const ingredientRelations = relations(ingredient, ({ many }) => ({
 }));
 
 export const manufacturedBatch = pgTable("manufactured_batches", {
-    id: uuid("id").notNull().primaryKey().defaultRandom(), // todo: is from base table batch
+    id: uuid("id")
+        .notNull()
+        .primaryKey()
+        .references(() => batch.id, { onDelete: "cascade" }),
     manufacturedOn: date("manufactured_on").notNull(),
 });
+
+export const manufacturedBatchRelations = relations(manufacturedBatch, ({ one, many }) => ({
+    batch: one(batch, {
+        fields: [manufacturedBatch.id],
+        references: [batch.id],
+    }),
+    productBatches: many(productBatch),
+}));
 
 export const batch = pgTable("batches_bt", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
@@ -159,16 +211,23 @@ export const batch = pgTable("batches_bt", {
     massUnitId: uuid("mass_unit_id")
         .notNull()
         .references(() => unit.id, { onDelete: "cascade" }),
-    insertedAt: timestamp("inserted_at", { mode: "date", precision: 3, withTimezone: false })
+    insertedAt: timestamp("inserted_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
         .notNull()
         .defaultNow(),
-    updatedAt: timestamp("updated_at", { mode: "date", precision: 3, withTimezone: false })
+    updatedAt: timestamp("updated_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
         .notNull()
         .$onUpdate(() => new Date()),
 });
 
 export const batchRelations = relations(batch, ({ one, many }) => ({
-    productBatches: many(productBatch),
     massUnit: one(unit, {
         fields: [batch.massUnitId],
         references: [unit.id],
@@ -176,11 +235,18 @@ export const batchRelations = relations(batch, ({ one, many }) => ({
 }));
 
 export const receivedBatch = pgTable("received_batches", {
-    id: uuid("id").notNull().primaryKey().defaultRandom(), // todo: is from base table batch
+    id: uuid("id")
+        .notNull()
+        .primaryKey()
+        .references(() => batch.id, { onDelete: "cascade" }),
     deliveredOn: date("delivered_on").notNull(),
 });
 
-export const receivedBatchRelations = relations(receivedBatch, ({ many }) => ({
+export const receivedBatchRelations = relations(receivedBatch, ({ one, many }) => ({
+    batch: one(batch, {
+        fields: [receivedBatch.id],
+        references: [batch.id],
+    }),
     rawMaterials: many(rawMaterial),
 }));
 
@@ -188,10 +254,18 @@ export const unit = pgTable("units", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
     symbol: text("symbol").notNull(),
     label: text("label").notNull(),
-    insertedAt: timestamp("inserted_at", { mode: "date", precision: 3, withTimezone: false })
+    insertedAt: timestamp("inserted_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
         .notNull()
         .defaultNow(),
-    updatedAt: timestamp("updated_at", { mode: "date", precision: 3, withTimezone: false })
+    updatedAt: timestamp("updated_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
         .notNull()
         .$onUpdate(() => new Date()),
 });
@@ -216,10 +290,18 @@ export const recipeHasIngredient = pgTable(
         amountUnitId: uuid("amount_unit_id")
             .notNull()
             .references(() => unit.id, { onDelete: "cascade" }),
-        insertedAt: timestamp("inserted_at", { mode: "date", precision: 3, withTimezone: false })
+        insertedAt: timestamp("inserted_at", {
+            mode: "date",
+            precision: 3,
+            withTimezone: false,
+        })
             .notNull()
             .defaultNow(),
-        updatedAt: timestamp("updated_at", { mode: "date", precision: 3, withTimezone: false })
+        updatedAt: timestamp("updated_at", {
+            mode: "date",
+            precision: 3,
+            withTimezone: false,
+        })
             .notNull()
             .$onUpdate(() => new Date()),
     },
@@ -244,17 +326,22 @@ export const recipeHasIngredientRelations = relations(recipeHasIngredient, ({ on
 }));
 
 export const supplyItem = pgTable("supply_items", {
-    id: uuid("id").notNull().primaryKey().defaultRandom(), // todo: is from base table ingredient
+    id: uuid("id")
+        .notNull()
+        .primaryKey()
+        .references(() => ingredient.id, { onDelete: "cascade" }),
     isVegan: boolean("is_vegan").notNull().default(false),
     isVegetarian: boolean("is_vegetarian").notNull().default(false),
     isTurkishHalal: boolean("is_turkish_halal").notNull().default(true),
     isJewishKosher: boolean("is_jewish_kosher").notNull().default(true),
 });
 
-export const supplyItemRelations = relations(supplyItem, ({ many }) => ({
+export const supplyItemRelations = relations(supplyItem, ({ one, many }) => ({
+    ingredient: one(ingredient, {
+        fields: [supplyItem.id],
+        references: [ingredient.id],
+    }),
     rawMaterials: many(rawMaterial),
-    // ingredients: many(ingredient),
-    // rawMaterials: many(rawMaterial),
 }));
 
 export const unitConversion = pgTable(
@@ -268,10 +355,18 @@ export const unitConversion = pgTable(
             .references(() => unit.id, { onDelete: "cascade" }),
         conversionFactor: doublePrecision("conversion_factor").notNull(),
         description: text("description"),
-        insertedAt: timestamp("inserted_at", { mode: "date", precision: 3, withTimezone: false })
+        insertedAt: timestamp("inserted_at", {
+            mode: "date",
+            precision: 3,
+            withTimezone: false,
+        })
             .notNull()
             .defaultNow(),
-        updatedAt: timestamp("updated_at", { mode: "date", precision: 3, withTimezone: false })
+        updatedAt: timestamp("updated_at", {
+            mode: "date",
+            precision: 3,
+            withTimezone: false,
+        })
             .notNull()
             .$onUpdate(() => new Date()),
     },

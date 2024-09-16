@@ -12,40 +12,43 @@ import {
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
-export const productBatch = pgTable("product_batches", {
+export const productBatches = pgTable("product_batches", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
     productId: uuid("product_id")
         .notNull()
-        .references(() => product.id, { onDelete: "cascade" }),
+        .references(() => products.id, { onDelete: "cascade" }),
     batchId: uuid("batch_id")
         .notNull()
-        .references(() => manufacturedBatch.id, { onDelete: "cascade" }),
+        .references(() => manufacturedBatches.id, { onDelete: "cascade" }),
     recipeId: uuid("recipe_id")
         .notNull()
-        .references(() => recipe.id, { onDelete: "cascade" }),
+        .references(() => recipes.id, { onDelete: "cascade" }),
 });
 
-export const productBatchRelations = relations(productBatch, ({ one }) => ({
-    product: one(product, {
-        fields: [productBatch.productId],
-        references: [product.id],
+export type ProductBatch = typeof productBatches.$inferSelect;
+export type NewProductBatch = typeof productBatches.$inferInsert;
+
+export const productBatchesRelations = relations(productBatches, ({ one }) => ({
+    product: one(products, {
+        fields: [productBatches.productId],
+        references: [products.id],
     }),
-    batch: one(batch, {
-        fields: [productBatch.batchId],
-        references: [batch.id],
+    batch: one(batches, {
+        fields: [productBatches.batchId],
+        references: [batches.id],
     }),
-    recipe: one(recipe, {
-        fields: [productBatch.recipeId],
-        references: [recipe.id],
+    recipe: one(recipes, {
+        fields: [productBatches.recipeId],
+        references: [recipes.id],
     }),
 }));
 
-export const recipe = pgTable("recipes", {
+export const recipes = pgTable("recipes", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
     name: text("name"),
     productId: uuid("product_id")
         .notNull()
-        .references(() => product.id, { onDelete: "cascade" }),
+        .references(() => products.id, { onDelete: "cascade" }),
     isObsolete: boolean("is_obsolete").notNull(),
     insertedAt: timestamp("inserted_at", {
         mode: "date",
@@ -60,19 +63,23 @@ export const recipe = pgTable("recipes", {
         withTimezone: false,
     })
         .notNull()
+        .defaultNow()
         .$onUpdate(() => new Date()),
 });
 
-export const recipeRelations = relations(recipe, ({ one, many }) => ({
-    product: one(product, {
-        fields: [recipe.productId],
-        references: [product.id],
+export type Recipe = typeof recipes.$inferSelect;
+export type NewRecipe = typeof recipes.$inferInsert;
+
+export const recipesRelations = relations(recipes, ({ one, many }) => ({
+    product: one(products, {
+        fields: [recipes.productId],
+        references: [products.id],
     }),
-    productBatches: many(productBatch),
-    recipeHasIngredients: many(recipeHasIngredient),
+    productBatches: many(productBatches),
+    recipeHasIngredients: many(recipeHasIngredients),
 }));
 
-export const configuration = pgTable("configurations", {
+export const configurations = pgTable("configurations", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
     version: integer("version").notNull(),
     insertedAt: timestamp("inserted_at", {
@@ -88,47 +95,57 @@ export const configuration = pgTable("configurations", {
         withTimezone: false,
     })
         .notNull()
+        .defaultNow()
         .$onUpdate(() => new Date()),
 });
 
-export const product = pgTable("products", {
+export type Configuration = typeof configurations.$inferSelect;
+export type NewConfiguration = typeof configurations.$inferInsert;
+
+export const products = pgTable("products", {
     id: uuid("id")
         .notNull()
         .primaryKey()
-        .references(() => ingredient.id, { onDelete: "cascade" }),
-    currentRecipeId: uuid("current_recipe_id").references((): AnyPgColumn => recipe.id),
+        .references(() => ingredients.id, { onDelete: "cascade" }),
+    currentRecipeId: uuid("current_recipe_id").references((): AnyPgColumn => recipes.id),
     massValue: doublePrecision("mass_value").notNull(),
     massUnitId: uuid("mass_unit_id").notNull(),
     isActive: boolean("is_active").notNull(),
 });
 
-export const productRelations = relations(product, ({ one, many }) => ({
-    ingredient: one(ingredient, {
-        fields: [product.id],
-        references: [ingredient.id],
+export type Product = typeof products.$inferSelect;
+export type NewProduct = typeof products.$inferInsert;
+
+export const productsRelations = relations(products, ({ one, many }) => ({
+    ingredient: one(ingredients, {
+        fields: [products.id],
+        references: [ingredients.id],
     }),
-    recipes: many(recipe),
-    currentRecipe: one(recipe, {
-        fields: [product.currentRecipeId],
-        references: [recipe.id],
+    recipes: many(recipes),
+    currentRecipe: one(recipes, {
+        fields: [products.currentRecipeId],
+        references: [recipes.id],
     }),
-    productBatches: many(productBatch),
+    productBatches: many(productBatches),
 }));
 
-export const customer = pgTable("customers", {
+export const customers = pgTable("customers", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
     name: text("name").notNull(),
     description: text("description"),
 });
 
-export const rawMaterial = pgTable("raw_materials", {
+export type Customer = typeof customers.$inferSelect;
+export type NewCustomer = typeof customers.$inferInsert;
+
+export const rawMaterials = pgTable("raw_materials", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
     supplyItemId: uuid("supply_item_id")
         .notNull()
-        .references(() => supplyItem.id, { onDelete: "cascade" }),
+        .references(() => supplyItems.id, { onDelete: "cascade" }),
     receivedBatchesId: uuid("received_batches_id")
         .notNull()
-        .references(() => receivedBatch.id, { onDelete: "cascade" }),
+        .references(() => receivedBatches.id, { onDelete: "cascade" }),
     number: text("number").notNull().unique(),
     overrideIsVegan: boolean("override_is_vegan"),
     overrideIsVegetarian: boolean("override_is_vegetarian"),
@@ -147,21 +164,25 @@ export const rawMaterial = pgTable("raw_materials", {
         withTimezone: false,
     })
         .notNull()
+        .defaultNow()
         .$onUpdate(() => new Date()),
 });
 
-export const rawMaterialRelations = relations(rawMaterial, ({ one }) => ({
-    supplyItem: one(supplyItem, {
-        fields: [rawMaterial.supplyItemId],
-        references: [supplyItem.id],
+export type RawMaterial = typeof rawMaterials.$inferSelect;
+export type NewRawMaterial = typeof rawMaterials.$inferInsert;
+
+export const rawMaterialsRelations = relations(rawMaterials, ({ one }) => ({
+    supplyItem: one(supplyItems, {
+        fields: [rawMaterials.supplyItemId],
+        references: [supplyItems.id],
     }),
-    receivedBatch: one(receivedBatch, {
-        fields: [rawMaterial.receivedBatchesId],
-        references: [receivedBatch.id],
+    receivedBatch: one(receivedBatches, {
+        fields: [rawMaterials.receivedBatchesId],
+        references: [receivedBatches.id],
     }),
 }));
 
-export const ingredient = pgTable("ingredients_bt", {
+export const ingredients = pgTable("ingredients_bt", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
     number: text("number").notNull().unique(),
     name: text("name").notNull(),
@@ -179,30 +200,37 @@ export const ingredient = pgTable("ingredients_bt", {
         withTimezone: false,
     })
         .notNull()
+        .defaultNow()
         .$onUpdate(() => new Date()),
 });
 
-export const ingredientRelations = relations(ingredient, ({ many }) => ({
-    recipeHasIngredients: many(recipeHasIngredient),
+export type Ingredient = typeof ingredients.$inferSelect;
+export type NewIngredient = typeof ingredients.$inferInsert;
+
+export const ingredientsRelations = relations(ingredients, ({ many }) => ({
+    recipeHasIngredients: many(recipeHasIngredients),
 }));
 
-export const manufacturedBatch = pgTable("manufactured_batches", {
+export const manufacturedBatches = pgTable("manufactured_batches", {
     id: uuid("id")
         .notNull()
         .primaryKey()
-        .references(() => batch.id, { onDelete: "cascade" }),
+        .references(() => batches.id, { onDelete: "cascade" }),
     manufacturedOn: date("manufactured_on").notNull(),
 });
 
-export const manufacturedBatchRelations = relations(manufacturedBatch, ({ one, many }) => ({
-    batch: one(batch, {
-        fields: [manufacturedBatch.id],
-        references: [batch.id],
+export type ManufacturedBatch = typeof manufacturedBatches.$inferSelect;
+export type NewManufacturedBatch = typeof manufacturedBatches.$inferInsert;
+
+export const manufacturedBatchesRelations = relations(manufacturedBatches, ({ one, many }) => ({
+    batch: one(batches, {
+        fields: [manufacturedBatches.id],
+        references: [batches.id],
     }),
-    productBatches: many(productBatch),
+    productBatches: many(productBatches),
 }));
 
-export const batch = pgTable("batches_bt", {
+export const batches = pgTable("batches_bt", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
     number: text("number").notNull(),
     expiresOn: date("expires_on").notNull(),
@@ -210,7 +238,7 @@ export const batch = pgTable("batches_bt", {
     massValue: doublePrecision("mass_value").notNull(),
     massUnitId: uuid("mass_unit_id")
         .notNull()
-        .references(() => unit.id, { onDelete: "cascade" }),
+        .references(() => units.id, { onDelete: "cascade" }),
     insertedAt: timestamp("inserted_at", {
         mode: "date",
         precision: 3,
@@ -224,33 +252,40 @@ export const batch = pgTable("batches_bt", {
         withTimezone: false,
     })
         .notNull()
+        .defaultNow()
         .$onUpdate(() => new Date()),
 });
 
-export const batchRelations = relations(batch, ({ one, many }) => ({
-    massUnit: one(unit, {
-        fields: [batch.massUnitId],
-        references: [unit.id],
+export type Batch = typeof batches.$inferSelect;
+export type NewBatch = typeof batches.$inferInsert;
+
+export const batchesRelations = relations(batches, ({ one, many }) => ({
+    massUnit: one(units, {
+        fields: [batches.massUnitId],
+        references: [units.id],
     }),
 }));
 
-export const receivedBatch = pgTable("received_batches", {
+export const receivedBatches = pgTable("received_batches", {
     id: uuid("id")
         .notNull()
         .primaryKey()
-        .references(() => batch.id, { onDelete: "cascade" }),
+        .references(() => batches.id, { onDelete: "cascade" }),
     deliveredOn: date("delivered_on").notNull(),
 });
 
-export const receivedBatchRelations = relations(receivedBatch, ({ one, many }) => ({
-    batch: one(batch, {
-        fields: [receivedBatch.id],
-        references: [batch.id],
+export type ReceivedBatch = typeof receivedBatches.$inferSelect;
+export type NewReceivedBatch = typeof receivedBatches.$inferInsert;
+
+export const receivedBatchesRelations = relations(receivedBatches, ({ one, many }) => ({
+    batch: one(batches, {
+        fields: [receivedBatches.id],
+        references: [batches.id],
     }),
-    rawMaterials: many(rawMaterial),
+    rawMaterials: many(rawMaterials),
 }));
 
-export const unit = pgTable("units", {
+export const units = pgTable("units", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
     symbol: text("symbol").notNull(),
     label: text("label").notNull(),
@@ -267,29 +302,33 @@ export const unit = pgTable("units", {
         withTimezone: false,
     })
         .notNull()
+        .defaultNow()
         .$onUpdate(() => new Date()),
 });
 
-export const unitRelations = relations(unit, ({ many }) => ({
-    fromUnits: many(unitConversion, { relationName: "fromUnit" }),
-    toUnits: many(unitConversion, { relationName: "toUnit" }),
-    recipeHasIngredients: many(recipeHasIngredient),
-    batches: many(batch),
+export type Unit = typeof units.$inferSelect;
+export type NewUnit = typeof units.$inferInsert;
+
+export const unitsRelations = relations(units, ({ many }) => ({
+    fromUnits: many(unitConversions, { relationName: "fromUnit" }),
+    toUnits: many(unitConversions, { relationName: "toUnit" }),
+    recipeHasIngredients: many(recipeHasIngredients),
+    batches: many(batches),
 }));
 
-export const recipeHasIngredient = pgTable(
+export const recipeHasIngredients = pgTable(
     "recipe_has_ingredients_jt",
     {
         ingredientId: uuid("ingredient_id")
             .notNull()
-            .references(() => ingredient.id, { onDelete: "cascade" }),
+            .references(() => ingredients.id, { onDelete: "cascade" }),
         recipeId: uuid("recipe_id")
             .notNull()
-            .references(() => recipe.id, { onDelete: "cascade" }),
+            .references(() => recipes.id, { onDelete: "cascade" }),
         amountValue: integer("amount_value").notNull(),
         amountUnitId: uuid("amount_unit_id")
             .notNull()
-            .references(() => unit.id, { onDelete: "cascade" }),
+            .references(() => units.id, { onDelete: "cascade" }),
         insertedAt: timestamp("inserted_at", {
             mode: "date",
             precision: 3,
@@ -303,6 +342,7 @@ export const recipeHasIngredient = pgTable(
             withTimezone: false,
         })
             .notNull()
+            .defaultNow()
             .$onUpdate(() => new Date()),
     },
     (table) => ({
@@ -310,49 +350,55 @@ export const recipeHasIngredient = pgTable(
     })
 );
 
-export const recipeHasIngredientRelations = relations(recipeHasIngredient, ({ one }) => ({
-    ingredient: one(ingredient, {
-        fields: [recipeHasIngredient.ingredientId],
-        references: [ingredient.id],
+export type RecipeHasIngredient = typeof recipeHasIngredients.$inferSelect;
+export type NewRecipeHasIngredient = typeof recipeHasIngredients.$inferInsert;
+
+export const recipeHasIngredientsRelations = relations(recipeHasIngredients, ({ one }) => ({
+    ingredient: one(ingredients, {
+        fields: [recipeHasIngredients.ingredientId],
+        references: [ingredients.id],
     }),
-    recipe: one(recipe, {
-        fields: [recipeHasIngredient.recipeId],
-        references: [recipe.id],
+    recipe: one(recipes, {
+        fields: [recipeHasIngredients.recipeId],
+        references: [recipes.id],
     }),
-    amountUnit: one(unit, {
-        fields: [recipeHasIngredient.amountUnitId],
-        references: [unit.id],
+    amountUnit: one(units, {
+        fields: [recipeHasIngredients.amountUnitId],
+        references: [units.id],
     }),
 }));
 
-export const supplyItem = pgTable("supply_items", {
+export const supplyItems = pgTable("supply_items", {
     id: uuid("id")
         .notNull()
         .primaryKey()
-        .references(() => ingredient.id, { onDelete: "cascade" }),
+        .references(() => ingredients.id, { onDelete: "cascade" }),
     isVegan: boolean("is_vegan").notNull().default(false),
     isVegetarian: boolean("is_vegetarian").notNull().default(false),
     isTurkishHalal: boolean("is_turkish_halal").notNull().default(true),
     isJewishKosher: boolean("is_jewish_kosher").notNull().default(true),
 });
 
-export const supplyItemRelations = relations(supplyItem, ({ one, many }) => ({
-    ingredient: one(ingredient, {
-        fields: [supplyItem.id],
-        references: [ingredient.id],
+export type SupplyItem = typeof supplyItems.$inferSelect;
+export type NewSupplyItem = typeof supplyItems.$inferInsert;
+
+export const supplyItemsRelations = relations(supplyItems, ({ one, many }) => ({
+    ingredient: one(ingredients, {
+        fields: [supplyItems.id],
+        references: [ingredients.id],
     }),
-    rawMaterials: many(rawMaterial),
+    rawMaterials: many(rawMaterials),
 }));
 
-export const unitConversion = pgTable(
+export const unitConversions = pgTable(
     "unit_conversions",
     {
         fromUnitId: uuid("from_unit_id")
             .notNull()
-            .references(() => unit.id, { onDelete: "cascade" }),
+            .references(() => units.id, { onDelete: "cascade" }),
         toUnitId: uuid("to_unit_id")
             .notNull()
-            .references(() => unit.id, { onDelete: "cascade" }),
+            .references(() => units.id, { onDelete: "cascade" }),
         conversionFactor: doublePrecision("conversion_factor").notNull(),
         description: text("description"),
         insertedAt: timestamp("inserted_at", {
@@ -368,6 +414,7 @@ export const unitConversion = pgTable(
             withTimezone: false,
         })
             .notNull()
+            .defaultNow()
             .$onUpdate(() => new Date()),
     },
     (table) => ({
@@ -375,15 +422,18 @@ export const unitConversion = pgTable(
     })
 );
 
-export const unitConversionRelations = relations(unitConversion, ({ one }) => ({
-    fromUnit: one(unit, {
-        fields: [unitConversion.fromUnitId],
-        references: [unit.id],
+export type UnitConversion = typeof unitConversions.$inferSelect;
+export type NewUnitConversion = typeof unitConversions.$inferInsert;
+
+export const unitConversionsRelations = relations(unitConversions, ({ one }) => ({
+    fromUnit: one(units, {
+        fields: [unitConversions.fromUnitId],
+        references: [units.id],
         relationName: "fromUnit",
     }),
-    toUnit: one(unit, {
-        fields: [unitConversion.toUnitId],
-        references: [unit.id],
+    toUnit: one(units, {
+        fields: [unitConversions.toUnitId],
+        references: [units.id],
         relationName: "toUnit",
     }),
 }));

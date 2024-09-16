@@ -1,0 +1,3 @@
+setup:
+    - project: batch-management-system
+      config: prd

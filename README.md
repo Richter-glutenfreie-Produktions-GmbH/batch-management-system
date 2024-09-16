@@ -84,4 +84,4 @@ Please file feedback and issues over on the [Supabase GitHub org](https://github
 
 Licensed under the GNU General Public License v3.0, Copyright © trueberryless.
 
-See [LICENSE](https://github.com/trueberryless-org/mutanuq/blob/main/LICENSE) for more information.
+See [LICENSE](https://github.com/Richter-glutenfreie-Produktions-GmbH/batch-management-system/blob/main/LICENSE) for more information.

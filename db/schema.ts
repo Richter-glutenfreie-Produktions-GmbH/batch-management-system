@@ -109,7 +109,9 @@ export const products = pgTable("products", {
         .references(() => ingredients.id, { onDelete: "cascade" }),
     currentRecipeId: uuid("current_recipe_id").references((): AnyPgColumn => recipes.id),
     massValue: doublePrecision("mass_value").notNull(),
-    massUnitId: uuid("mass_unit_id").notNull(),
+    massUnitId: uuid("mass_unit_id")
+        .notNull()
+        .references(() => units.id),
     isActive: boolean("is_active").notNull().default(true),
 });
 
@@ -121,11 +123,15 @@ export const productsRelations = relations(products, ({ one, many }) => ({
         fields: [products.id],
         references: [ingredients.id],
     }),
-    recipes: many(recipes),
     currentRecipe: one(recipes, {
         fields: [products.currentRecipeId],
         references: [recipes.id],
     }),
+    massUnit: one(units, {
+        fields: [products.massUnitId],
+        references: [units.id],
+    }),
+    recipes: many(recipes),
     productBatches: many(productBatches),
 }));
 
@@ -316,6 +322,7 @@ export const unitsRelations = relations(units, ({ many }) => ({
     toUnits: many(unitConversions, { relationName: "toUnit" }),
     recipeHasIngredients: many(recipeHasIngredients),
     batches: many(batches),
+    products: many(products),
 }));
 
 export const recipeHasIngredients = pgTable(

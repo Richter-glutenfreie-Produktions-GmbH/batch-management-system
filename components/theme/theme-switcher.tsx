@@ -3,8 +3,8 @@
 import { Moon, Sun } from "lucide-react";
 import * as React from "react";
 
-import { saveData } from "@/utils/save";
-import { getCurrentTheme, setTheme } from "@/utils/themes";
+// import { saveData } from "@/utils/save";
+import { getCurrentTheme, setTheme } from "@/utils/theme/utils";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,32 +15,28 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { useUser } from "../UserContext";
+// import { useUser } from "../UserContext";
 import { ThemeDiamond } from "./theme-diamond";
 
-export default function ThemeSwitch() {
-    const { user } = useUser();
+export default function ThemeSwitcher() {
     const [currentTheme, setCurrentTheme] = React.useState("default");
 
     // Load and set the initial theme on mount
-    React.useEffect(() => {
-        const initialTheme = user?.settings.theme || getCurrentTheme();
-        setTheme(initialTheme);
-        setCurrentTheme(initialTheme);
-    }, [user]);
+    // React.useEffect(() => {
+    //     const initialTheme = user?.settings.theme || getCurrentTheme();
+    //     setTheme(initialTheme);
+    //     setCurrentTheme(initialTheme);
+    // }, [user]);
 
-    const handleThemeChange = React.useCallback(
-        (theme: any) => {
-            setTheme(theme);
-            setCurrentTheme(theme);
+    const handleThemeChange = React.useCallback((theme: any) => {
+        setTheme(theme);
+        setCurrentTheme(theme);
 
-            if (user) {
-                user.settings.theme = theme;
-                saveData(user);
-            }
-        },
-        [user],
-    );
+        // if (user) {
+        //     user.settings.theme = theme;
+        //     saveData(user);
+        // }
+    }, []);
 
     return (
         <DropdownMenu>

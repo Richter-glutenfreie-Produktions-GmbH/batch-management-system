@@ -12,6 +12,20 @@ import {
 } from "drizzle-orm/pg-core";
 import { relations, sql } from "drizzle-orm";
 
+// export const users = pgTable("users", {
+//     id: uuid("id").notNull().primaryKey(),
+// });
+
+// export type User = typeof users.$inferSelect;
+// export type NewUser = typeof users.$inferInsert;
+
+// export const usersRelations = relations(users, ({ one }) => ({
+//     user: one(sql`auth.user`, {
+//         fields: [users.id],
+//         references: [users.id],
+//     }),
+// }));
+
 export const productBatches = pgTable("product_batches", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
     productId: uuid("product_id")

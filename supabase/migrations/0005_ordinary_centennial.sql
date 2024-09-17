@@ -1,0 +1,1 @@
+ALTER TABLE "recipes" ALTER COLUMN "is_obsolete" SET DEFAULT false;

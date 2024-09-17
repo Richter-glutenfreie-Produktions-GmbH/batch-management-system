@@ -10,7 +10,7 @@ import {
     uuid,
     AnyPgColumn,
 } from "drizzle-orm/pg-core";
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 
 export const productBatches = pgTable("product_batches", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
@@ -49,7 +49,7 @@ export const recipes = pgTable("recipes", {
     productId: uuid("product_id")
         .notNull()
         .references(() => products.id, { onDelete: "cascade" }),
-    isObsolete: boolean("is_obsolete").notNull(),
+    isObsolete: boolean("is_obsolete").notNull().default(false),
     insertedAt: timestamp("inserted_at", {
         mode: "date",
         precision: 3,
@@ -110,7 +110,7 @@ export const products = pgTable("products", {
     currentRecipeId: uuid("current_recipe_id").references((): AnyPgColumn => recipes.id),
     massValue: doublePrecision("mass_value").notNull(),
     massUnitId: uuid("mass_unit_id").notNull(),
-    isActive: boolean("is_active").notNull(),
+    isActive: boolean("is_active").notNull().default(true),
 });
 
 export type Product = typeof products.$inferSelect;
@@ -216,7 +216,7 @@ export const manufacturedBatches = pgTable("manufactured_batches", {
         .notNull()
         .primaryKey()
         .references(() => batches.id, { onDelete: "cascade" }),
-    manufacturedOn: date("manufactured_on").notNull(),
+    manufacturedOn: date("manufactured_on").notNull().defaultNow(),
 });
 
 export type ManufacturedBatch = typeof manufacturedBatches.$inferSelect;
@@ -233,7 +233,9 @@ export const manufacturedBatchesRelations = relations(manufacturedBatches, ({ on
 export const batches = pgTable("batches_bt", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
     number: text("number").notNull(),
-    expiresOn: date("expires_on").notNull(),
+    expiresOn: date("expires_on")
+        .notNull()
+        .default(sql`CURRENT_TIMESTAMP + INTERVAL '1 year'`),
     note: text("note"),
     massValue: doublePrecision("mass_value").notNull(),
     massUnitId: uuid("mass_unit_id")
@@ -271,7 +273,7 @@ export const receivedBatches = pgTable("received_batches", {
         .notNull()
         .primaryKey()
         .references(() => batches.id, { onDelete: "cascade" }),
-    deliveredOn: date("delivered_on").notNull(),
+    deliveredOn: date("delivered_on").notNull().defaultNow(),
 });
 
 export type ReceivedBatch = typeof receivedBatches.$inferSelect;

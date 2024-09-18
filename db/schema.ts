@@ -334,7 +334,7 @@ export type NewUnit = typeof units.$inferInsert;
 export const unitsRelations = relations(units, ({ many }) => ({
     fromUnits: many(unitConversions, { relationName: "fromUnit" }),
     toUnits: many(unitConversions, { relationName: "toUnit" }),
-    recipeHasIngredients: many(recipeHasIngredients),
+    // recipeHasIngredients: many(recipeHasIngredients),
     batches: many(batches),
     products: many(products),
 }));
@@ -348,10 +348,10 @@ export const recipeHasIngredients = pgTable(
         recipeId: uuid("recipe_id")
             .notNull()
             .references(() => recipes.id, { onDelete: "cascade" }),
-        amountValue: integer("amount_value").notNull(),
-        amountUnitId: uuid("amount_unit_id")
-            .notNull()
-            .references(() => units.id, { onDelete: "cascade" }),
+        // amountValue: integer("amount_value").notNull(),
+        // amountUnitId: uuid("amount_unit_id")
+        //     .notNull()
+        //     .references(() => units.id, { onDelete: "cascade" }),
         insertedAt: timestamp("inserted_at", {
             mode: "date",
             precision: 3,
@@ -385,10 +385,10 @@ export const recipeHasIngredientsRelations = relations(recipeHasIngredients, ({ 
         fields: [recipeHasIngredients.recipeId],
         references: [recipes.id],
     }),
-    amountUnit: one(units, {
-        fields: [recipeHasIngredients.amountUnitId],
-        references: [units.id],
-    }),
+    // amountUnit: one(units, {
+    //     fields: [recipeHasIngredients.amountUnitId],
+    //     references: [units.id],
+    // }),
 }));
 
 export const supplyItems = pgTable("supply_items", {

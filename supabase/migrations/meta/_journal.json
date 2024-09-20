@@ -1,55 +1,62 @@
 {
-    "version": "7",
-    "dialect": "postgresql",
-    "entries": [
-        {
-            "idx": 0,
-            "version": "7",
-            "when": 1726486119670,
-            "tag": "0000_big_meteorite",
-            "breakpoints": true
-        },
-        {
-            "idx": 1,
-            "version": "7",
-            "when": 1726486247068,
-            "tag": "0001_safe_marvel_boy",
-            "breakpoints": true
-        },
-        {
-            "idx": 2,
-            "version": "7",
-            "when": 1726517357852,
-            "tag": "0002_wealthy_anita_blake",
-            "breakpoints": true
-        },
-        {
-            "idx": 3,
-            "version": "7",
-            "when": 1726580283724,
-            "tag": "0003_puzzling_tarantula",
-            "breakpoints": true
-        },
-        {
-            "idx": 4,
-            "version": "7",
-            "when": 1726580583582,
-            "tag": "0004_public_captain_universe",
-            "breakpoints": true
-        },
-        {
-            "idx": 5,
-            "version": "7",
-            "when": 1726580715782,
-            "tag": "0005_ordinary_centennial",
-            "breakpoints": true
-        },
-        {
-            "idx": 2,
-            "version": "7",
-            "when": 1726517357852,
-            "tag": "0002_wealthy_anita_blake",
-            "breakpoints": true
-        }
-    ]
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1726486119670,
+      "tag": "0000_big_meteorite",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1726486247068,
+      "tag": "0001_safe_marvel_boy",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1726517357852,
+      "tag": "0002_wealthy_anita_blake",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1726580283724,
+      "tag": "0003_puzzling_tarantula",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1726580583582,
+      "tag": "0004_public_captain_universe",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1726580715782,
+      "tag": "0005_ordinary_centennial",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1726517357852,
+      "tag": "0002_wealthy_anita_blake",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1726849396012,
+      "tag": "0003_dear_valkyrie",
+      "breakpoints": true
+    }
+  ]
 }

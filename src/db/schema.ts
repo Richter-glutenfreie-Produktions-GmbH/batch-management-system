@@ -5,6 +5,7 @@ import {
     date,
     doublePrecision,
     integer,
+    pgSchema,
     pgTable,
     primaryKey,
     text,
@@ -12,19 +13,28 @@ import {
     uuid,
 } from "drizzle-orm/pg-core";
 
-// export const users = pgTable("users", {
-//     id: uuid("id").notNull().primaryKey(),
-// });
+const authSchema = pgSchema("auth");
 
-// export type User = typeof users.$inferSelect;
-// export type NewUser = typeof users.$inferInsert;
+const authUsers = authSchema.table("users", {
+    id: uuid("id").primaryKey(),
+});
 
-// export const usersRelations = relations(users, ({ one }) => ({
-//     user: one(sql`auth.user`, {
-//         fields: [users.id],
-//         references: [users.id],
-//     }),
-// }));
+export const users = pgTable("users", {
+    id: uuid("id")
+        .notNull()
+        .primaryKey()
+        .references(() => authUsers.id),
+});
+
+export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;
+
+export const usersRelations = relations(users, ({ one }) => ({
+    user: one(authUsers, {
+        fields: [users.id],
+        references: [authUsers.id],
+    }),
+}));
 
 export const productBatches = pgTable("product_batches", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),

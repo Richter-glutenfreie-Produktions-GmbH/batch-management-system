@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/routing";
 
 /**
  * Redirects to a specified path with an encoded message as a query parameter.

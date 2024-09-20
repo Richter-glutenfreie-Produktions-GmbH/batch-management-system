@@ -1,5 +1,5 @@
 import { signOutAction } from "@/app/actions";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 
 import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import { createClient } from "@/utils/supabase/server";

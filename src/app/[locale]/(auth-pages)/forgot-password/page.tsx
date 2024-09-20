@@ -1,5 +1,5 @@
 import { forgotPasswordAction } from "@/app/actions";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 
 import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";

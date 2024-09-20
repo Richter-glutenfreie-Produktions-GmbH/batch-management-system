@@ -1,7 +1,7 @@
 "use server";
 
+import { redirect } from "@/i18n/routing";
 import { headers } from "next/headers";
-import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
 import { encodedRedirect } from "@/utils/utils";

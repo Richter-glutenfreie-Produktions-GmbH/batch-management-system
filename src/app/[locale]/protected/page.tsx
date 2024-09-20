@@ -1,5 +1,5 @@
+import { redirect } from "@/i18n/routing";
 import { InfoIcon } from "lucide-react";
-import { redirect } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/server";
 

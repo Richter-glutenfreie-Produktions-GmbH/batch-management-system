@@ -6,26 +6,78 @@
     "Navigation": {
         "ingredients": {
             "title": "Zutaten",
-            "description": "Zutaten verwalten",
             "overview": {
                 "title": "Übersicht",
-                "description": "Übersicht der Zutaten",
-                "href": "/ingredients"
+                "description": "Statistiken für Zutaten in einem Dashboard"
             },
             "list": {
                 "title": "Liste",
-                "description": "Liste der Zutaten in einer Tabelle",
-                "href": "/ingredients/list"
+                "description": "Eine Liste aller Zutaten in einer Tabelle"
             },
             "create": {
                 "title": "Erstellen",
-                "description": "Erstellen einer neuen Zutat",
-                "href": "/ingredients/create"
+                "description": "Mehr Zutaten helfen, feinere Rezept zu kreieren"
             },
             "edit": {
                 "title": "Bearbeiten",
-                "description": "Bearbeiten einer Zutat",
-                "href": "/ingredients/edit"
+                "description": "Ist Ihnen eh keinen Tippfehler unterlaufen?"
+            }
+        },
+        "products": {
+            "title": "Produkte",
+            "overview": {
+                "title": "Übersicht",
+                "description": "Statistiken für Produkte in einem Dashboard"
+            },
+            "list": {
+                "title": "Liste",
+                "description": "Eine Liste aller Produkte in einer Tabelle"
+            },
+            "create": {
+                "title": "Erstellen",
+                "description": "Erzeugen Sie etwas Neues"
+            },
+            "edit": {
+                "title": "Bearbeiten",
+                "description": "Ist das aktuelle Produkt nicht gut genug?"
+            }
+        },
+        "recipes": {
+            "title": "Rezepte",
+            "overview": {
+                "title": "Übersicht",
+                "description": "Statistiken für Rezepte in einem Dashboard"
+            },
+            "list": {
+                "title": "Liste",
+                "description": "Eine Liste aller Rezepte in einer Tabelle"
+            },
+            "create": {
+                "title": "Erstellen",
+                "description": "Jede Kreation beginnt irgendwo"
+            },
+            "edit": {
+                "title": "Bearbeiten",
+                "description": "Nicht zufrieden mit dem aktuellen Rezept?"
+            }
+        },
+        "batches": {
+            "title": "Chargen",
+            "overview": {
+                "title": "Übersicht",
+                "description": "Eine Übersicht für alle Chargen in einem Dashboard"
+            },
+            "list": {
+                "title": "Liste",
+                "description": "Eine Liste aller Chargen in einer Tabelle"
+            },
+            "create": {
+                "title": "Erstellen",
+                "description": "Hier brauchen wir die nächste Chargennummer"
+            },
+            "edit": {
+                "title": "Bearbeiten",
+                "description": "Oh oh, ich hoffe es ist nichts schief gelaufen..."
             }
         }
     },

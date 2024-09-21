@@ -1,9 +1,9 @@
 "use client";
 
+import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
-import { ShoppingBasket } from "lucide-react";
+import { Croissant, Fingerprint, ScrollText, ShoppingBasket } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 import * as React from "react";
 
 import {
@@ -57,67 +57,70 @@ export function HeaderNavigationMenu() {
     return (
         <NavigationMenu>
             <NavigationMenuList>
-                <NavigationMenuItem>
-                    <NavigationMenuTrigger>{t("ingredients.title")}</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                        <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                            <li className="row-span-3">
-                                <NavigationMenuLink asChild>
-                                    <a
-                                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                                        href="/"
-                                    >
-                                        <ShoppingBasket className="h-6 w-6" />
-                                        <div className="mb-2 mt-4 text-lg font-medium">
-                                            {t("ingredients.overview.title")}
-                                        </div>
-                                        <p className="text-sm leading-tight text-muted-foreground">
-                                            {t("ingredients.overview.description")}
-                                        </p>
-                                    </a>
-                                </NavigationMenuLink>
-                            </li>
-                            <ListItem href={t("ingredients.list.href")} title={t("ingredients.list.title")}>
-                                {t("ingredients.list.description")}
-                            </ListItem>
-                            <ListItem href={t("ingredients.create.href")} title={t("ingredients.create.title")}>
-                                {t("ingredients.create.description")}
-                            </ListItem>
-                            <ListItem href={t("ingredients.edit.href")} title={t("ingredients.edit.title")}>
-                                {t("ingredients.edit.description")}
-                            </ListItem>
-                        </ul>
-                    </NavigationMenuContent>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                            {components.map((component) => (
-                                <ListItem key={component.title} title={component.title} href={component.href}>
-                                    {component.description}
-                                </ListItem>
-                            ))}
-                        </ul>
-                    </NavigationMenuContent>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
+                <NavigationMenuItemDynamic type="ingredients" icon={<ShoppingBasket className="h-6 w-6" />} />
+                <NavigationMenuItemDynamic type="products" icon={<Croissant className="h-6 w-6" />} />
+                <NavigationMenuItemDynamic type="recipes" icon={<ScrollText className="h-6 w-6" />} />
+                <NavigationMenuItemDynamic type="batches" icon={<Fingerprint className="h-6 w-6" />} />
+                {/* <NavigationMenuItem>
                     <Link href="/docs" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>Documentation</NavigationMenuLink>
                     </Link>
-                </NavigationMenuItem>
+                </NavigationMenuItem> */}
             </NavigationMenuList>
         </NavigationMenu>
     );
 }
 
+interface NavigationMenuItemDynamicProps {
+    type: "ingredients" | "products" | "recipes" | "batches";
+    icon: React.ReactNode;
+}
+
+const NavigationMenuItemDynamic: React.FC<NavigationMenuItemDynamicProps> = ({ type, icon }) => {
+    const t = useTranslations("Navigation");
+
+    return (
+        <NavigationMenuItem>
+            <NavigationMenuTrigger>{t(`${type}.title`)}</NavigationMenuTrigger>
+            <NavigationMenuContent>
+                <ul className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                    <li className="row-span-3">
+                        <NavigationMenuLink asChild>
+                            <Link
+                                className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                                href={`/${type}`}
+                            >
+                                {icon}
+                                <div className="mb-2 mt-4 text-lg font-medium">{t(`${type}.overview.title`)}</div>
+                                <p className="text-sm leading-tight text-muted-foreground">
+                                    {t(`${type}.overview.description`)}
+                                </p>
+                            </Link>
+                        </NavigationMenuLink>
+                    </li>
+                    <ListItem href={`/${type}/list`} title={t(`${type}.list.title`)}>
+                        {t(`${type}.list.description`)}
+                    </ListItem>
+                    <ListItem href={`/${type}/create`} title={t(`${type}.create.title`)}>
+                        {t(`${type}.create.description`)}
+                    </ListItem>
+                    <ListItem href={`/${type}/edit`} title={t(`${type}.edit.title`)}>
+                        {t(`${type}.edit.description`)}
+                    </ListItem>
+                </ul>
+            </NavigationMenuContent>
+        </NavigationMenuItem>
+    );
+};
+
 const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWithoutRef<"a">>(
-    ({ className, title, children, ...props }, ref) => {
+    ({ className, href, title, children, ...props }, ref) => {
         return (
             <li>
                 <NavigationMenuLink asChild>
-                    <a
+                    <Link
                         ref={ref}
+                        href={href!}
                         className={cn(
                             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
                             className,
@@ -126,7 +129,7 @@ const ListItem = React.forwardRef<React.ElementRef<"a">, React.ComponentPropsWit
                     >
                         <div className="text-sm font-medium leading-none">{title}</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">{children}</p>
-                    </a>
+                    </Link>
                 </NavigationMenuLink>
             </li>
         );

@@ -6,31 +6,80 @@
     "Navigation": {
         "ingredients": {
             "title": "Ingredients",
-            "description": "Manage ingredients",
             "overview": {
                 "title": "Overview",
-                "description": "Get an overview of all ingredients",
-                "href": "/ingredients"
+                "description": "Some statistics about ingredients in a dashboard"
             },
             "list": {
                 "title": "List",
-                "description": "List all ingredients in a table view",
-                "href": "/ingredients/list"
+                "description": "List all ingredients in a table view"
             },
             "create": {
                 "title": "Create",
-                "description": "Create a new ingredient",
-                "href": "/ingredients/create"
+                "description": "More ingredients give more options to recipes"
             },
             "edit": {
                 "title": "Edit",
-                "description": "Edit an ingredient",
-                "href": "/ingredients/edit"
+                "description": "Did you accidentally mistype something?"
             }
         },
-        "products": "Products",
-        "recipes": "Recipes",
-        "batches": "Batches"
+        "products": {
+            "title": "Products",
+            "overview": {
+                "title": "Overview",
+                "description": "Some statistics about products in a dashboard"
+            },
+            "list": {
+                "title": "List",
+                "description": "List all products in a table view"
+            },
+            "create": {
+                "title": "Create",
+                "description": "Produce something new"
+            },
+            "edit": {
+                "title": "Edit",
+                "description": "Not enjoying the current product enough?"
+            }
+        },
+        "recipes": {
+            "title": "Recipes",
+            "overview": {
+                "title": "Overview",
+                "description": "Some statistics about recipes in a dashboard"
+            },
+            "list": {
+                "title": "List",
+                "description": "List all recipes in a table view"
+            },
+            "create": {
+                "title": "Create",
+                "description": "Every creation starts somewhere"
+            },
+            "edit": {
+                "title": "Edit",
+                "description": "Not satisfied with your current recipe?"
+            }
+        },
+        "batches": {
+            "title": "Batches",
+            "overview": {
+                "title": "Overview",
+                "description": "A basic overview of all the batches in a dashboard"
+            },
+            "list": {
+                "title": "List",
+                "description": "List all batches in a table view"
+            },
+            "create": {
+                "title": "Create",
+                "description": "I hope you can count because we'll need a successor"
+            },
+            "edit": {
+                "title": "Edit",
+                "description": "Oh no. Hopefully nothing went wrong..."
+            }
+        }
     },
     "LocaleSwitcher": {
         "label": "Change language",

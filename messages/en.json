@@ -2,5 +2,38 @@
     "HomePage": {
         "title": "Hello world!",
         "about": "Go to the about page"
+    },
+    "Navigation": {
+        "ingredients": {
+            "title": "Ingredients",
+            "description": "Manage ingredients",
+            "overview": {
+                "title": "Overview",
+                "description": "Get an overview of all ingredients",
+                "href": "/ingredients"
+            },
+            "list": {
+                "title": "List",
+                "description": "List all ingredients in a table view",
+                "href": "/ingredients/list"
+            },
+            "create": {
+                "title": "Create",
+                "description": "Create a new ingredient",
+                "href": "/ingredients/create"
+            },
+            "edit": {
+                "title": "Edit",
+                "description": "Edit an ingredient",
+                "href": "/ingredients/edit"
+            }
+        },
+        "products": "Products",
+        "recipes": "Recipes",
+        "batches": "Batches"
+    },
+    "LocaleSwitcher": {
+        "label": "Change language",
+        "locale": "{locale, select, de {🇩🇪 Deutsch} en {🇺🇸 English} other {Unknown}}"
     }
 }

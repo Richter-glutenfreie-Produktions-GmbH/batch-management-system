@@ -2,5 +2,35 @@
     "HomePage": {
         "title": "Hallo Welt!",
         "about": "Navigieren Sie zu \"Über uns\""
+    },
+    "Navigation": {
+        "ingredients": {
+            "title": "Zutaten",
+            "description": "Zutaten verwalten",
+            "overview": {
+                "title": "Übersicht",
+                "description": "Übersicht der Zutaten",
+                "href": "/ingredients"
+            },
+            "list": {
+                "title": "Liste",
+                "description": "Liste der Zutaten in einer Tabelle",
+                "href": "/ingredients/list"
+            },
+            "create": {
+                "title": "Erstellen",
+                "description": "Erstellen einer neuen Zutat",
+                "href": "/ingredients/create"
+            },
+            "edit": {
+                "title": "Bearbeiten",
+                "description": "Bearbeiten einer Zutat",
+                "href": "/ingredients/edit"
+            }
+        }
+    },
+    "LocaleSwitcher": {
+        "label": "Sprache ändern",
+        "locale": "{locale, select, de {🇩🇪 Deutsch} en {🇺🇸 English} other {Unbekannt}}"
     }
 }

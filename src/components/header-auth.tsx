@@ -1,53 +1,42 @@
 import { signOutAction } from "@/app/actions";
 import { Link } from "@/i18n/routing";
+import { CircleUser, Menu, Package2 } from "lucide-react";
 
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import { createClient } from "@/utils/supabase/server";
 
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default async function AuthButton() {
     const {
         data: { user },
     } = await createClient().auth.getUser();
 
-    if (!hasEnvVars) {
-        return (
-            <>
-                <div className="flex gap-4 items-center">
-                    <div>
-                        <Badge variant={"default"} className="font-normal pointer-events-none">
-                            Please update .env.local file with anon key and url
-                        </Badge>
-                    </div>
-                    <div className="flex gap-2">
-                        <Button
-                            asChild
-                            size="sm"
-                            variant={"outline"}
-                            disabled
-                            className="opacity-75 cursor-none pointer-events-none"
-                        >
-                            <Link href="/sign-in">Sign in</Link>
-                        </Button>
-                        <Button
-                            asChild
-                            size="sm"
-                            variant={"default"}
-                            disabled
-                            className="opacity-75 cursor-none pointer-events-none"
-                        >
-                            <Link href="/sign-up">Sign up</Link>
-                        </Button>
-                    </div>
-                </div>
-            </>
-        );
-    }
     return user ? (
         <div className="flex items-center gap-4">
-            Hey, {user.email}!
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="secondary" size="icon" className="rounded-full">
+                        <CircleUser className="h-5 w-5" />
+                        <span className="sr-only">Toggle user menu</span>
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Settings</DropdownMenuItem>
+                    <DropdownMenuItem>Support</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>Logout</DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
             <form action={signOutAction}>
                 <Button type="submit" variant={"outline"}>
                     Sign out
@@ -55,11 +44,11 @@ export default async function AuthButton() {
             </form>
         </div>
     ) : (
-        <div className="flex gap-2">
-            <Button asChild size="sm" variant={"outline"}>
+        <div className="flex gap-4">
+            <Button asChild variant={"outline"}>
                 <Link href="/sign-in">Sign in</Link>
             </Button>
-            <Button asChild size="sm" variant={"default"}>
+            <Button asChild variant={"default"}>
                 <Link href="/sign-up">Sign up</Link>
             </Button>
         </div>

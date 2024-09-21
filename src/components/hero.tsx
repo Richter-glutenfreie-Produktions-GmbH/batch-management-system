@@ -1,7 +1,7 @@
 import NextLogo from "./next-logo";
 import SupabaseLogo from "./supabase-logo";
 
-export default function Header() {
+export default function Hero() {
     return (
         <div className="flex flex-col gap-16 items-center">
             <div className="flex gap-8 justify-center items-center">
@@ -33,7 +33,6 @@ export default function Header() {
                     Next.js
                 </a>
             </p>
-            <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-8" />
         </div>
     );
 }

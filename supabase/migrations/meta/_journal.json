@@ -57,6 +57,13 @@
       "when": 1726849396012,
       "tag": "0003_dear_valkyrie",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1726861460281,
+      "tag": "0004_fearless_boomerang",
+      "breakpoints": true
     }
   ]
 }

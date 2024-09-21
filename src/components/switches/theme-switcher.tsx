@@ -3,7 +3,6 @@
 import { Moon, Sun } from "lucide-react";
 import * as React from "react";
 
-// import { saveData } from "@/utils/save";
 import { getCurrentTheme, setTheme } from "@/utils/theme/utils";
 
 import { Button } from "@/components/ui/button";

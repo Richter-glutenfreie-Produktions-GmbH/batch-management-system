@@ -29,10 +29,30 @@ export const users = pgTable("users", {
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 
-export const usersRelations = relations(users, ({ one }) => ({
+export const usersRelations = relations(users, ({ one, many }) => ({
     user: one(authUsers, {
         fields: [users.id],
         references: [authUsers.id],
+    }),
+    settings: many(settings),
+}));
+
+export const settings = pgTable("settings", {
+    id: uuid("id").notNull().primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+        .notNull()
+        .references(() => users.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    value: text("value").notNull(),
+});
+
+export type Setting = typeof settings.$inferSelect;
+export type NewSetting = typeof settings.$inferInsert;
+
+export const settingsRelations = relations(settings, ({ one }) => ({
+    user: one(users, {
+        fields: [settings.userId],
+        references: [users.id],
     }),
 }));
 

@@ -1,88 +1,137 @@
 {
-    "HomePage": {
+    "homePage": {
         "title": "Hello world!",
         "about": "Go to the about page"
     },
-    "Navigation": {
-        "ingredients": {
-            "title": "Ingredients",
-            "overview": {
-                "title": "Overview",
-                "description": "Some statistics about ingredients in a dashboard"
+    "header": {
+        "navigation": {
+            "ingredients": {
+                "title": "Ingredients",
+                "overview": {
+                    "title": "Overview",
+                    "description": "Some statistics about ingredients in a dashboard"
+                },
+                "list": {
+                    "title": "List",
+                    "description": "List all ingredients in a table view"
+                },
+                "create": {
+                    "title": "Create",
+                    "description": "More ingredients give more options to recipes"
+                },
+                "edit": {
+                    "title": "Edit",
+                    "description": "Did you accidentally mistype something?"
+                }
             },
-            "list": {
-                "title": "List",
-                "description": "List all ingredients in a table view"
+            "products": {
+                "title": "Products",
+                "overview": {
+                    "title": "Overview",
+                    "description": "Some statistics about products in a dashboard"
+                },
+                "list": {
+                    "title": "List",
+                    "description": "List all products in a table view"
+                },
+                "create": {
+                    "title": "Create",
+                    "description": "Produce something new"
+                },
+                "edit": {
+                    "title": "Edit",
+                    "description": "Not enjoying the current product enough?"
+                }
             },
-            "create": {
-                "title": "Create",
-                "description": "More ingredients give more options to recipes"
+            "recipes": {
+                "title": "Recipes",
+                "overview": {
+                    "title": "Overview",
+                    "description": "Some statistics about recipes in a dashboard"
+                },
+                "list": {
+                    "title": "List",
+                    "description": "List all recipes in a table view"
+                },
+                "create": {
+                    "title": "Create",
+                    "description": "Every creation starts somewhere"
+                },
+                "edit": {
+                    "title": "Edit",
+                    "description": "Not satisfied with your current recipe?"
+                }
             },
-            "edit": {
-                "title": "Edit",
-                "description": "Did you accidentally mistype something?"
+            "batches": {
+                "title": "Batches",
+                "overview": {
+                    "title": "Overview",
+                    "description": "A basic overview of all the batches in a dashboard"
+                },
+                "list": {
+                    "title": "List",
+                    "description": "List all batches in a table view"
+                },
+                "create": {
+                    "title": "Create",
+                    "description": "I hope you can count because we'll need a successor"
+                },
+                "edit": {
+                    "title": "Edit",
+                    "description": "Oh no. Hopefully nothing went wrong..."
+                }
             }
         },
-        "products": {
-            "title": "Products",
-            "overview": {
-                "title": "Overview",
-                "description": "Some statistics about products in a dashboard"
-            },
-            "list": {
-                "title": "List",
-                "description": "List all products in a table view"
-            },
-            "create": {
-                "title": "Create",
-                "description": "Produce something new"
-            },
-            "edit": {
-                "title": "Edit",
-                "description": "Not enjoying the current product enough?"
-            }
+        "modeSwitcher": {
+            "label": "Change dark mode",
+            "theme": "{theme, select, light {Light} dark {Dark} system {System} other {Unknown}}"
         },
-        "recipes": {
-            "title": "Recipes",
-            "overview": {
-                "title": "Overview",
-                "description": "Some statistics about recipes in a dashboard"
-            },
-            "list": {
-                "title": "List",
-                "description": "List all recipes in a table view"
-            },
-            "create": {
-                "title": "Create",
-                "description": "Every creation starts somewhere"
-            },
-            "edit": {
-                "title": "Edit",
-                "description": "Not satisfied with your current recipe?"
-            }
+        "themeSwitcher": {
+            "label": "Change theme",
+            "theme": "{theme, select, default {Default} palette {Palette} sapphire {Sapphire} ruby {Ruby} emerald {Emerald} coral {Coral} amber {Amber} amethyst {Amethyst} daylight {Daylight} midnight {Midnight} other {Unknown}}"
         },
-        "batches": {
-            "title": "Batches",
-            "overview": {
-                "title": "Overview",
-                "description": "A basic overview of all the batches in a dashboard"
-            },
-            "list": {
-                "title": "List",
-                "description": "List all batches in a table view"
-            },
-            "create": {
-                "title": "Create",
-                "description": "I hope you can count because we'll need a successor"
-            },
-            "edit": {
-                "title": "Edit",
-                "description": "Oh no. Hopefully nothing went wrong..."
-            }
+        "localeSwitcher": {
+            "label": "Change language",
+            "locale": "{locale, select, de {🇩🇪 Deutsch} en {🇺🇸 English} other {Unknown}}"
         }
     },
-    "LocaleSwitcher": {
-        "label": "Change language",
-        "locale": "{locale, select, de {🇩🇪 Deutsch} en {🇺🇸 English} other {Unknown}}"
+    "authPages": {
+        "signIn": {
+            "title": "Login",
+            "explanation": "Enter your email below to login to your account",
+            "email": "Email",
+            "emailPlaceholder": "you@example.com",
+            "password": "Password",
+            "forgotPassword": "Forgot your password?",
+            "submit": "Sign in",
+            "pendingText": "Signing in...",
+            "noAccount": "Don't have an account?",
+            "noAccountLink": "Sign up"
+        },
+        "signUp": {
+            "title": "Register",
+            "explanation": "Enter your information below to create an account",
+            "firstName": "First name",
+            "firstNamePlaceholder": "Max",
+            "lastName": "Last name",
+            "lastNamePlaceholder": "Robinson",
+            "email": "Email",
+            "emailPlaceholder": "you@example.com",
+            "password": "Password",
+            "submit": "Create an account",
+            "pendingText": "Creating account...",
+            "haveAccount": "Already have an account?",
+            "haveAccountLink": "Sign in"
+        },
+        "forgotPassword": {
+            "title": "Reset Password",
+            "explanation": "Get a reset password link per email",
+            "email": "Email",
+            "emailPlaceholder": "you@example.com",
+            "submit": "Reset Password",
+            "pendingText": "Sending email...",
+            "haveAccount": "Already have an account?",
+            "haveAccountLink": "Sign in"
+        }
     }
 }

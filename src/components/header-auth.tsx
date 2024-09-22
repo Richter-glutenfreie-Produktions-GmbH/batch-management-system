@@ -1,6 +1,7 @@
 import { signOutAction } from "@/app/actions";
 import { Link } from "@/i18n/routing";
 import { CircleUser, Menu, Package2 } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 import { createClient } from "@/utils/supabase/server";
 
@@ -18,6 +19,7 @@ export default async function AuthButton() {
     const {
         data: { user },
     } = await createClient().auth.getUser();
+    const t = await getTranslations("header.auth");
 
     return user ? (
         <div className="flex items-center gap-4">

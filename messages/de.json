@@ -1,88 +1,137 @@
 {
-    "HomePage": {
+    "homePage": {
         "title": "Hallo Welt!",
         "about": "Navigieren Sie zu \"Über uns\""
     },
-    "Navigation": {
-        "ingredients": {
-            "title": "Zutaten",
-            "overview": {
-                "title": "Übersicht",
-                "description": "Statistiken für Zutaten in einem Dashboard"
+    "header": {
+        "navigation": {
+            "ingredients": {
+                "title": "Zutaten",
+                "overview": {
+                    "title": "Übersicht",
+                    "description": "Statistiken für Zutaten in einem Dashboard"
+                },
+                "list": {
+                    "title": "Liste",
+                    "description": "Eine Liste aller Zutaten in einer Tabelle"
+                },
+                "create": {
+                    "title": "Erstellen",
+                    "description": "Mehr Zutaten helfen, feinere Rezept zu kreieren"
+                },
+                "edit": {
+                    "title": "Bearbeiten",
+                    "description": "Ist Ihnen eh keinen Tippfehler unterlaufen?"
+                }
             },
-            "list": {
-                "title": "Liste",
-                "description": "Eine Liste aller Zutaten in einer Tabelle"
+            "products": {
+                "title": "Produkte",
+                "overview": {
+                    "title": "Übersicht",
+                    "description": "Statistiken für Produkte in einem Dashboard"
+                },
+                "list": {
+                    "title": "Liste",
+                    "description": "Eine Liste aller Produkte in einer Tabelle"
+                },
+                "create": {
+                    "title": "Erstellen",
+                    "description": "Erzeugen Sie etwas Neues"
+                },
+                "edit": {
+                    "title": "Bearbeiten",
+                    "description": "Ist das aktuelle Produkt nicht gut genug?"
+                }
             },
-            "create": {
-                "title": "Erstellen",
-                "description": "Mehr Zutaten helfen, feinere Rezept zu kreieren"
+            "recipes": {
+                "title": "Rezepte",
+                "overview": {
+                    "title": "Übersicht",
+                    "description": "Statistiken für Rezepte in einem Dashboard"
+                },
+                "list": {
+                    "title": "Liste",
+                    "description": "Eine Liste aller Rezepte in einer Tabelle"
+                },
+                "create": {
+                    "title": "Erstellen",
+                    "description": "Jede Kreation beginnt irgendwo"
+                },
+                "edit": {
+                    "title": "Bearbeiten",
+                    "description": "Nicht zufrieden mit dem aktuellen Rezept?"
+                }
             },
-            "edit": {
-                "title": "Bearbeiten",
-                "description": "Ist Ihnen eh keinen Tippfehler unterlaufen?"
+            "batches": {
+                "title": "Chargen",
+                "overview": {
+                    "title": "Übersicht",
+                    "description": "Eine Übersicht für alle Chargen in einem Dashboard"
+                },
+                "list": {
+                    "title": "Liste",
+                    "description": "Eine Liste aller Chargen in einer Tabelle"
+                },
+                "create": {
+                    "title": "Erstellen",
+                    "description": "Hier brauchen wir die nächste Chargennummer"
+                },
+                "edit": {
+                    "title": "Bearbeiten",
+                    "description": "Oh oh, ich hoffe es ist nichts schief gelaufen..."
+                }
             }
         },
-        "products": {
-            "title": "Produkte",
-            "overview": {
-                "title": "Übersicht",
-                "description": "Statistiken für Produkte in einem Dashboard"
-            },
-            "list": {
-                "title": "Liste",
-                "description": "Eine Liste aller Produkte in einer Tabelle"
-            },
-            "create": {
-                "title": "Erstellen",
-                "description": "Erzeugen Sie etwas Neues"
-            },
-            "edit": {
-                "title": "Bearbeiten",
-                "description": "Ist das aktuelle Produkt nicht gut genug?"
-            }
+        "modeSwitcher": {
+            "label": "Helligkeit ändern",
+            "theme": "{theme, select, light {Hell} dark {Dunkel} system {System} other {Unbekannt}}"
         },
-        "recipes": {
-            "title": "Rezepte",
-            "overview": {
-                "title": "Übersicht",
-                "description": "Statistiken für Rezepte in einem Dashboard"
-            },
-            "list": {
-                "title": "Liste",
-                "description": "Eine Liste aller Rezepte in einer Tabelle"
-            },
-            "create": {
-                "title": "Erstellen",
-                "description": "Jede Kreation beginnt irgendwo"
-            },
-            "edit": {
-                "title": "Bearbeiten",
-                "description": "Nicht zufrieden mit dem aktuellen Rezept?"
-            }
+        "themeSwitcher": {
+            "label": "Aussehen ändern",
+            "theme": "{theme, select, default {Standard} palette {Palette} sapphire {Saphir} ruby {Rubin} emerald {Smaragd} coral {Koralle} amber {Bernstein} amethyst {Amethyst} daylight {Tageslicht} midnight {Mitternacht} other {Unknown}}"
         },
-        "batches": {
-            "title": "Chargen",
-            "overview": {
-                "title": "Übersicht",
-                "description": "Eine Übersicht für alle Chargen in einem Dashboard"
-            },
-            "list": {
-                "title": "Liste",
-                "description": "Eine Liste aller Chargen in einer Tabelle"
-            },
-            "create": {
-                "title": "Erstellen",
-                "description": "Hier brauchen wir die nächste Chargennummer"
-            },
-            "edit": {
-                "title": "Bearbeiten",
-                "description": "Oh oh, ich hoffe es ist nichts schief gelaufen..."
-            }
+        "localeSwitcher": {
+            "label": "Sprache ändern",
+            "locale": "{locale, select, de {🇩🇪 Deutsch} en {🇺🇸 English} other {Unbekannt}}"
         }
     },
-    "LocaleSwitcher": {
-        "label": "Sprache ändern",
-        "locale": "{locale, select, de {🇩🇪 Deutsch} en {🇺🇸 English} other {Unbekannt}}"
+    "authPages": {
+        "signIn": {
+            "title": "Anmeldung",
+            "explanation": "Geben Sie Ihre Daten ein, um sich anzumelden",
+            "email": "E-Mail",
+            "emailPlaceholder": "ihre@domain.de",
+            "password": "Passwort",
+            "forgotPassword": "Passwort vergessen?",
+            "submit": "Anmelden",
+            "pendingText": "Anmelden...",
+            "noAccount": "Haben Sie noch keinen Account?",
+            "noAccountLink": "Registrieren"
+        },
+        "signUp": {
+            "title": "Registrierung",
+            "explanation": "Geben Sie Ihre Daten ein um einen Account zu erstellen",
+            "firstName": "Vorname",
+            "firstNamePlaceholder": "Michael",
+            "lastName": "Nachname",
+            "lastNamePlaceholder": "Mayer",
+            "email": "E-Mail",
+            "emailPlaceholder": "ihre@domain.de",
+            "password": "Passwort",
+            "submit": "Registrieren",
+            "pendingText": "Registrieren...",
+            "haveAccount": "Haben Sie bereits einen Account?",
+            "haveAccountLink": "Anmelden"
+        },
+        "forgotPassword": {
+            "title": "Passwort zurücksetzen",
+            "explanation": "Erhalten Sie einen Link zum Zurücksetzen Ihres Passwortes",
+            "email": "E-Mail",
+            "emailPlaceholder": "ihre@domain.de",
+            "submit": "Passwort zurücksetzen",
+            "pendingText": "E-Mail senden...",
+            "haveAccount": "Haben Sie bereits einen Account?",
+            "haveAccountLink": "Anmelden"
+        }
     }
 }

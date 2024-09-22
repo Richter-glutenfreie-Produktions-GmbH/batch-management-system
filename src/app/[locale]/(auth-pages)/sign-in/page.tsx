@@ -1,37 +1,57 @@
 import { signInAction } from "@/app/actions";
-import { Link } from "@/i18n/routing";
+import { Link, routing } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+export async function generateStaticParams() {
+    const locales = routing.locales;
+    return locales.map((locale) => ({ locale }));
+}
+
 export default function Login({ searchParams }: { searchParams: Message }) {
+    const t = useTranslations("authPages.signIn");
+
     return (
-        <form className="flex-1 flex flex-col min-w-64">
-            <h1 className="text-2xl font-medium">Sign in</h1>
-            <p className="text-sm text-foreground">
-                Don't have an account?{" "}
-                <Link className="text-foreground font-medium underline" href="/sign-up">
-                    Sign up
-                </Link>
-            </p>
-            <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-                <Label htmlFor="email">Email</Label>
-                <Input name="email" placeholder="you@example.com" required />
-                <div className="flex justify-between items-center">
-                    <Label htmlFor="password">Password</Label>
-                    <Link className="text-xs text-foreground underline" href="/forgot-password">
-                        Forgot Password?
-                    </Link>
-                </div>
-                <Input type="password" name="password" placeholder="Your password" required />
-                <SubmitButton pendingText="Signing In..." formAction={signInAction}>
-                    Sign in
-                </SubmitButton>
-                <FormMessage message={searchParams} />
-            </div>
+        <form className="flex flex-col mx-auto">
+            <Card className="mx-auto w-96">
+                <CardHeader>
+                    <CardTitle className="text-2xl">{t("title")}</CardTitle>
+                    <CardDescription>{t("explanation")}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="grid gap-4">
+                        <div className="grid gap-2">
+                            <Label htmlFor="email">{t("email")}</Label>
+                            <Input id="email" type="email" name="email" placeholder={t("emailPlaceholder")} required />
+                        </div>
+                        <div className="grid gap-2">
+                            <div className="flex items-center">
+                                <Label htmlFor="password">{t("password")}</Label>
+                                <Link href="/forgot-password" className="ml-auto inline-block text-sm underline">
+                                    {t("forgotPassword")}
+                                </Link>
+                            </div>
+                            <Input id="password" type="password" name="password" required />
+                        </div>
+                        <FormMessage message={searchParams} />
+                        <SubmitButton pendingText={t("pendingText")} formAction={signInAction} className="w-full">
+                            {t("submit")}
+                        </SubmitButton>
+                    </div>
+                    <div className="mt-4 text-center text-sm">
+                        {t("noAccount")}{" "}
+                        <Link href="/sign-up" className="underline">
+                            {t("noAccountLink")}
+                        </Link>
+                    </div>
+                </CardContent>
+            </Card>
         </form>
     );
 }

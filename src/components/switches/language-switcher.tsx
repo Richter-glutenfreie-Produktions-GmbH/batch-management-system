@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export default function LanguageSwitcher() {
-    const t = useTranslations("LocaleSwitcher");
+    const t = useTranslations("header.localeSwitcher");
     const locale = useLocale();
 
     const router = useRouter();

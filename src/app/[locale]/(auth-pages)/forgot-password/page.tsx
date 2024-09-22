@@ -1,35 +1,52 @@
 import { forgotPasswordAction } from "@/app/actions";
-import { Link } from "@/i18n/routing";
+import { Link, routing } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 import { FormMessage, Message } from "@/components/form-message";
 import { SubmitButton } from "@/components/submit-button";
 
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import { SmtpMessage } from "../smtp-message";
+export async function generateStaticParams() {
+    const locales = routing.locales;
+    return locales.map((locale) => ({ locale }));
+}
 
 export default function ForgotPassword({ searchParams }: { searchParams: Message }) {
+    const t = useTranslations("authPages.forgotPassword");
+
     return (
-        <>
-            <form className="flex-1 flex flex-col w-full gap-2 text-foreground [&>input]:mb-6 min-w-64 max-w-64 mx-auto">
-                <div>
-                    <h1 className="text-2xl font-medium">Reset Password</h1>
-                    <p className="text-sm text-secondary-foreground">
-                        Already have an account?{" "}
-                        <Link className="text-primary underline" href="/sign-in">
-                            Sign in
+        <form className="flex flex-col mx-auto">
+            <Card className="mx-auto w-96">
+                <CardHeader>
+                    <CardTitle className="text-2xl">{t("title")}</CardTitle>
+                    <CardDescription>{t("explanation")}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <div className="grid gap-4">
+                        <div className="grid gap-2">
+                            <Label htmlFor="email">{t("email")}</Label>
+                            <Input id="email" type="email" name="email" placeholder={t("emailPlaceholder")} required />
+                        </div>
+                        <FormMessage message={searchParams} />
+                        <SubmitButton
+                            pendingText={t("pendingText")}
+                            formAction={forgotPasswordAction}
+                            className="w-full"
+                        >
+                            {t("submit")}
+                        </SubmitButton>
+                    </div>
+                    <div className="mt-4 text-center text-sm">
+                        {t("haveAccount")}{" "}
+                        <Link href="/sign-in" className="underline">
+                            {t("haveAccountLink")}
                         </Link>
-                    </p>
-                </div>
-                <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
-                    <Label htmlFor="email">Email</Label>
-                    <Input name="email" placeholder="you@example.com" required />
-                    <SubmitButton formAction={forgotPasswordAction}>Reset Password</SubmitButton>
-                    <FormMessage message={searchParams} />
-                </div>
-            </form>
-            <SmtpMessage />
-        </>
+                    </div>
+                </CardContent>
+            </Card>
+        </form>
     );
 }

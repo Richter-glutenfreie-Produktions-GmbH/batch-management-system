@@ -503,3 +503,27 @@ export const doughs = pgTable("doughs", {
         .primaryKey().references(() => constituents.id, { onDelete: "cascade" })
 });
 
+
+export const bundles = pgTable("bundles_bt", {
+    id: uuid("id")
+        .notNull()
+        .primaryKey().defaultRandom()
+});
+
+export const packagingUnits = pgTable("packaging_units", {
+    id: uuid("id")
+        .notNull()
+        .primaryKey().references(() => bundles.id, { onDelete: "cascade" })
+});
+
+export const packages = pgTable("packages", {
+    id: uuid("id")
+        .notNull()
+        .primaryKey().references(() => bundles.id, { onDelete: "cascade" })
+});
+
+export const palettes = pgTable("palettes", {
+    id: uuid("id")
+        .notNull()
+        .primaryKey().references(() => bundles.id, { onDelete: "cascade" })
+});

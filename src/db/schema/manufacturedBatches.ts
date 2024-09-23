@@ -11,9 +11,6 @@ export const manufacturedBatches = pgTable("manufactured_batches", {
     manufacturedOn: date("manufactured_on").notNull().defaultNow(),
 });
 
-export type ManufacturedBatch = typeof manufacturedBatches.$inferSelect;
-export type NewManufacturedBatch = typeof manufacturedBatches.$inferInsert;
-
 export const manufacturedBatchesRelations = relations(manufacturedBatches, ({ one, many }) => ({
     batch: one(batches, {
         fields: [manufacturedBatches.id],
@@ -21,3 +18,6 @@ export const manufacturedBatchesRelations = relations(manufacturedBatches, ({ on
     }),
     // productBatches: many(productBatches),
 }));
+
+export type ManufacturedBatch = typeof manufacturedBatches.$inferSelect;
+export type NewManufacturedBatch = typeof manufacturedBatches.$inferInsert;

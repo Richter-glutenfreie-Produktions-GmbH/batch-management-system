@@ -35,9 +35,6 @@ export const unitConversions = pgTable(
     }),
 );
 
-export type UnitConversion = typeof unitConversions.$inferSelect;
-export type NewUnitConversion = typeof unitConversions.$inferInsert;
-
 export const unitConversionsRelations = relations(unitConversions, ({ one }) => ({
     fromUnit: one(units, {
         fields: [unitConversions.fromUnitId],
@@ -50,3 +47,6 @@ export const unitConversionsRelations = relations(unitConversions, ({ one }) => 
         relationName: "toUnit",
     }),
 }));
+
+export type UnitConversion = typeof unitConversions.$inferSelect;
+export type NewUnitConversion = typeof unitConversions.$inferInsert;

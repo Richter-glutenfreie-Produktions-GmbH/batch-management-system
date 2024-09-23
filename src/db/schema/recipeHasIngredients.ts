@@ -38,9 +38,6 @@ export const recipeHasIngredients = pgTable(
     }),
 );
 
-export type RecipeHasIngredient = typeof recipeHasIngredients.$inferSelect;
-export type NewRecipeHasIngredient = typeof recipeHasIngredients.$inferInsert;
-
 export const recipeHasIngredientsRelations = relations(recipeHasIngredients, ({ one }) => ({
     ingredient: one(ingredients, {
         fields: [recipeHasIngredients.ingredientId],
@@ -55,3 +52,6 @@ export const recipeHasIngredientsRelations = relations(recipeHasIngredients, ({ 
     //     references: [units.id],
     // }),
 }));
+
+export type RecipeHasIngredient = typeof recipeHasIngredients.$inferSelect;
+export type NewRecipeHasIngredient = typeof recipeHasIngredients.$inferInsert;

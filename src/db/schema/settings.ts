@@ -12,12 +12,12 @@ export const settings = pgTable("settings", {
     value: text("value").notNull(),
 });
 
-export type Setting = typeof settings.$inferSelect;
-export type NewSetting = typeof settings.$inferInsert;
-
 export const settingsRelations = relations(settings, ({ one }) => ({
     user: one(users, {
         fields: [settings.userId],
         references: [users.id],
     }),
 }));
+
+export type Setting = typeof settings.$inferSelect;
+export type NewSetting = typeof settings.$inferInsert;

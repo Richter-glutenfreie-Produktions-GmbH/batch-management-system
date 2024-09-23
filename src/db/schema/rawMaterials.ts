@@ -34,9 +34,6 @@ export const rawMaterials = pgTable("raw_materials", {
         .$onUpdate(() => new Date()),
 });
 
-export type RawMaterial = typeof rawMaterials.$inferSelect;
-export type NewRawMaterial = typeof rawMaterials.$inferInsert;
-
 export const rawMaterialsRelations = relations(rawMaterials, ({ one }) => ({
     supplyItem: one(supplyItems, {
         fields: [rawMaterials.supplyItemId],
@@ -47,3 +44,6 @@ export const rawMaterialsRelations = relations(rawMaterials, ({ one }) => ({
         references: [receivedBatches.id],
     }),
 }));
+
+export type RawMaterial = typeof rawMaterials.$inferSelect;
+export type NewRawMaterial = typeof rawMaterials.$inferInsert;

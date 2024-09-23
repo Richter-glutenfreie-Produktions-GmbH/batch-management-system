@@ -8,3 +8,6 @@ export const packagingUnits = pgTable("packaging_units", {
         .primaryKey()
         .references(() => bundles.id, { onDelete: "cascade" }),
 });
+
+export type PackagingUnit = typeof packagingUnits.$inferSelect;
+export type NewPackagingUnit = typeof packagingUnits.$inferInsert;

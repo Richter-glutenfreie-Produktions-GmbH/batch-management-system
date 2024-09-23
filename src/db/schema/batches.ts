@@ -31,12 +31,12 @@ export const batches = pgTable("batches_bt", {
         .$onUpdate(() => new Date()),
 });
 
-export type Batch = typeof batches.$inferSelect;
-export type NewBatch = typeof batches.$inferInsert;
-
 export const batchesRelations = relations(batches, ({ one, many }) => ({
     massUnit: one(units, {
         fields: [batches.massUnitId],
         references: [units.id],
     }),
 }));
+
+export type Batch = typeof batches.$inferSelect;
+export type NewBatch = typeof batches.$inferInsert;

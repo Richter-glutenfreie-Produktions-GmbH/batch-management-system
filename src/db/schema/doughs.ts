@@ -8,3 +8,6 @@ export const doughs = pgTable("doughs", {
         .primaryKey()
         .references(() => constituents.id, { onDelete: "cascade" }),
 });
+
+export type Dough = typeof doughs.$inferSelect;
+export type NewDough = typeof doughs.$inferInsert;

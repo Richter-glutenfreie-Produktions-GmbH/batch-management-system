@@ -15,9 +15,6 @@ export const supplyItems = pgTable("supply_items", {
     isJewishKosher: boolean("is_jewish_kosher").notNull().default(true),
 });
 
-export type SupplyItem = typeof supplyItems.$inferSelect;
-export type NewSupplyItem = typeof supplyItems.$inferInsert;
-
 export const supplyItemsRelations = relations(supplyItems, ({ one, many }) => ({
     ingredient: one(ingredients, {
         fields: [supplyItems.id],
@@ -25,3 +22,6 @@ export const supplyItemsRelations = relations(supplyItems, ({ one, many }) => ({
     }),
     rawMaterials: many(rawMaterials),
 }));
+
+export type SupplyItem = typeof supplyItems.$inferSelect;
+export type NewSupplyItem = typeof supplyItems.$inferInsert;

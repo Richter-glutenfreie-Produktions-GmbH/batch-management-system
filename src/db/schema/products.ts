@@ -18,9 +18,6 @@ export const products = pgTable("products", {
     isActive: boolean("is_active").notNull().default(true),
 });
 
-export type Product = typeof products.$inferSelect;
-export type NewProduct = typeof products.$inferInsert;
-
 export const productsRelations = relations(products, ({ one, many }) => ({
     ingredient: one(ingredients, {
         fields: [products.id],
@@ -37,3 +34,6 @@ export const productsRelations = relations(products, ({ one, many }) => ({
     recipes: many(recipes),
     // productBatches: many(productBatches),
 }));
+
+export type Product = typeof products.$inferSelect;
+export type NewProduct = typeof products.$inferInsert;

@@ -12,9 +12,6 @@ export const receivedBatches = pgTable("received_batches", {
     deliveredOn: date("delivered_on").notNull().defaultNow(),
 });
 
-export type ReceivedBatch = typeof receivedBatches.$inferSelect;
-export type NewReceivedBatch = typeof receivedBatches.$inferInsert;
-
 export const receivedBatchesRelations = relations(receivedBatches, ({ one, many }) => ({
     batch: one(batches, {
         fields: [receivedBatches.id],
@@ -22,3 +19,6 @@ export const receivedBatchesRelations = relations(receivedBatches, ({ one, many 
     }),
     rawMaterials: many(rawMaterials),
 }));
+
+export type ReceivedBatch = typeof receivedBatches.$inferSelect;
+export type NewReceivedBatch = typeof receivedBatches.$inferInsert;

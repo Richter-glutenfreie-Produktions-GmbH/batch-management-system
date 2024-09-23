@@ -8,3 +8,6 @@ export const palettes = pgTable("palettes", {
         .primaryKey()
         .references(() => bundles.id, { onDelete: "cascade" }),
 });
+
+export type Palette = typeof palettes.$inferSelect;
+export type NewPalette = typeof palettes.$inferInsert;

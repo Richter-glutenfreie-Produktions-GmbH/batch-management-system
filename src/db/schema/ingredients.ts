@@ -29,9 +29,9 @@ export const ingredients = pgTable("ingredients", {
         .$onUpdate(() => new Date()),
 });
 
-export type Ingredient = typeof ingredients.$inferSelect;
-export type NewIngredient = typeof ingredients.$inferInsert;
-
 export const ingredientsRelations = relations(ingredients, ({ many }) => ({
     recipeHasIngredients: many(recipeHasIngredients),
 }));
+
+export type Ingredient = typeof ingredients.$inferSelect;
+export type NewIngredient = typeof ingredients.$inferInsert;

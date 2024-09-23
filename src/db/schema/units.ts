@@ -26,9 +26,6 @@ export const units = pgTable("units", {
         .$onUpdate(() => new Date()),
 });
 
-export type Unit = typeof units.$inferSelect;
-export type NewUnit = typeof units.$inferInsert;
-
 export const unitsRelations = relations(units, ({ many }) => ({
     fromUnits: many(unitConversions, { relationName: "fromUnit" }),
     toUnits: many(unitConversions, { relationName: "toUnit" }),
@@ -36,3 +33,6 @@ export const unitsRelations = relations(units, ({ many }) => ({
     batches: many(batches),
     products: many(products),
 }));
+
+export type Unit = typeof units.$inferSelect;
+export type NewUnit = typeof units.$inferInsert;

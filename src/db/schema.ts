@@ -232,8 +232,8 @@ export const rawMaterialsRelations = relations(rawMaterials, ({ one }) => ({
     }),
 }));
 
-export const ingredients = pgTable("ingredients_bt", {
-    id: uuid("id").notNull().primaryKey().defaultRandom(),
+export const ingredients = pgTable("ingredients", {
+    id: uuid("id").notNull().primaryKey().references(() => contituents.id, { onDelete: "cascade" }),
     number: text("number").notNull().unique(),
     name: text("name").notNull(),
     description: text("description"),
@@ -490,3 +490,16 @@ export const unitConversionsRelations = relations(unitConversions, ({ one }) => 
         relationName: "toUnit",
     }),
 }));
+
+export const constituents = pgTable("constituents_bt", {
+    id: uuid("id")
+        .notNull()
+        .primaryKey().defaultRandom()
+});
+
+export const doughs = pgTable("doughs", {
+    id: uuid("id")
+        .notNull()
+        .primaryKey().references(() => constituents.id, { onDelete: "cascade" })
+});
+

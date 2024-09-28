@@ -2,7 +2,7 @@ import { relations } from "drizzle-orm";
 import { boolean, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 import { products } from "./products";
-import { recipeHasIngredients } from "./recipeHasIngredients";
+import { recipeHasConstituents } from "./recipeHasConstituents";
 
 export const recipes = pgTable("recipes", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
@@ -34,7 +34,7 @@ export const recipesRelations = relations(recipes, ({ one, many }) => ({
         references: [products.id],
     }),
     // productBatches: many(productBatches),
-    recipeHasIngredients: many(recipeHasIngredients),
+    recipeHasConstituents: many(recipeHasConstituents),
 }));
 
 export type Recipe = typeof recipes.$inferSelect;

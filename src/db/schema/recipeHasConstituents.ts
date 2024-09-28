@@ -1,15 +1,15 @@
 import { relations } from "drizzle-orm";
 import { pgTable, primaryKey, timestamp, uuid } from "drizzle-orm/pg-core";
 
-import { ingredients } from "./ingredients";
+import { constituents } from "./constituents";
 import { recipes } from "./recipes";
 
-export const recipeHasIngredients = pgTable(
-    "recipe_has_ingredients_jt",
+export const recipeHasConstituents = pgTable(
+    "recipe_has_constituents_jt",
     {
-        ingredientId: uuid("ingredient_id")
+        constituentId: uuid("constituent_id")
             .notNull()
-            .references(() => ingredients.id, { onDelete: "cascade" }),
+            .references(() => constituents.id, { onDelete: "cascade" }),
         recipeId: uuid("recipe_id")
             .notNull()
             .references(() => recipes.id, { onDelete: "cascade" }),
@@ -34,24 +34,20 @@ export const recipeHasIngredients = pgTable(
             .$onUpdate(() => new Date()),
     },
     (table) => ({
-        pk: primaryKey(table.ingredientId, table.recipeId),
+        pk: primaryKey(table.constituentId, table.recipeId),
     }),
 );
 
-export const recipeHasIngredientsRelations = relations(recipeHasIngredients, ({ one }) => ({
-    ingredient: one(ingredients, {
-        fields: [recipeHasIngredients.ingredientId],
-        references: [ingredients.id],
+export const recipeHasConstituentsRelations = relations(recipeHasConstituents, ({ one }) => ({
+    constituent: one(constituents, {
+        fields: [recipeHasConstituents.constituentId],
+        references: [constituents.id],
     }),
     recipe: one(recipes, {
-        fields: [recipeHasIngredients.recipeId],
+        fields: [recipeHasConstituents.recipeId],
         references: [recipes.id],
     }),
-    // amountUnit: one(units, {
-    //     fields: [recipeHasIngredients.amountUnitId],
-    //     references: [units.id],
-    // }),
 }));
 
-export type RecipeHasIngredient = typeof recipeHasIngredients.$inferSelect;
-export type NewRecipeHasIngredient = typeof recipeHasIngredients.$inferInsert;
+export type RecipeHasIngredient = typeof recipeHasConstituents.$inferSelect;
+export type NewRecipeHasIngredient = typeof recipeHasConstituents.$inferInsert;

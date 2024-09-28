@@ -1,8 +1,8 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { boolean, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 import { constituents } from "./constituents";
-import { recipeHasIngredients } from "./recipeHasIngredients";
+import { recipeHasConstituents } from "./recipeHasConstituents";
 
 export const ingredients = pgTable("ingredients", {
     id: uuid("id")
@@ -12,25 +12,18 @@ export const ingredients = pgTable("ingredients", {
     number: text("number").notNull().unique(),
     name: text("name").notNull(),
     description: text("description"),
-    insertedAt: timestamp("inserted_at", {
-        mode: "date",
-        precision: 3,
-        withTimezone: false,
-    })
-        .notNull()
-        .defaultNow(),
-    updatedAt: timestamp("updated_at", {
-        mode: "date",
-        precision: 3,
-        withTimezone: false,
-    })
-        .notNull()
-        .defaultNow()
-        .$onUpdate(() => new Date()),
+    isVegan: boolean("is_vegan").notNull().default(false),
+    isVegetarian: boolean("is_vegetarian").notNull().default(false),
+    isTurkishHalal: boolean("is_turkish_halal").notNull().default(true),
+    isJewishKosher: boolean("is_jewish_kosher").notNull().default(true),
 });
 
-export const ingredientsRelations = relations(ingredients, ({ many }) => ({
-    recipeHasIngredients: many(recipeHasIngredients),
+export const ingredientsRelations = relations(ingredients, ({ one, many }) => ({
+    constituent: one(constituents, {
+        fields: [ingredients.id],
+        references: [constituents.id],
+    }),
+    recipeHasConstituents: many(recipeHasConstituents),
 }));
 
 export type Ingredient = typeof ingredients.$inferSelect;

@@ -4,7 +4,7 @@ import { pgTable, uuid } from "drizzle-orm/pg-core";
 import { packages } from "./packages";
 import { palettes } from "./palettes";
 
-export const packageHierarchies = pgTable("selling_unit_hierarchies", {
+export const packageHierarchies = pgTable("package_hierarchies", {
     id: uuid("id")
         .notNull()
         .primaryKey()

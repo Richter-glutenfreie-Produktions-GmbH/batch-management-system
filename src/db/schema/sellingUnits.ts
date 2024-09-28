@@ -2,6 +2,7 @@ import { relations } from "drizzle-orm";
 import { pgTable, uuid } from "drizzle-orm/pg-core";
 
 import { bundles } from "./bundles";
+import { sellingUnitHierarchies } from "./sellingUnitHierarchies";
 
 export const sellingUnits = pgTable("selling_units", {
     id: uuid("id")
@@ -15,6 +16,7 @@ export const sellingUnitsRelations = relations(sellingUnits, ({ one, many }) => 
         fields: [sellingUnits.id],
         references: [bundles.id],
     }),
+    hierarchy: one(sellingUnitHierarchies),
 }));
 
 export type SellingUnit = typeof sellingUnits.$inferSelect;

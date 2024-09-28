@@ -2,6 +2,7 @@ import { relations } from "drizzle-orm";
 import { pgTable, uuid } from "drizzle-orm/pg-core";
 
 import { nestables } from "./nestables";
+import { packageHierarchies } from "./packageHierarchies";
 
 export const packages = pgTable("packages", {
     id: uuid("id")
@@ -15,6 +16,7 @@ export const packagesRelations = relations(packages, ({ one, many }) => ({
         fields: [packages.id],
         references: [nestables.id],
     }),
+    hierarchy: one(packageHierarchies),
 }));
 
 export type Package = typeof packages.$inferSelect;

@@ -1,9 +1,8 @@
 import { relations } from "drizzle-orm";
 import { pgTable, timestamp, uuid } from "drizzle-orm/pg-core";
 
-import { packages } from "./packages";
-import { packagingUnits } from "./packagingUnits";
-import { palettes } from "./palettes";
+import { nestables } from "./nestables";
+import { sellingUnits } from "./sellingUnits";
 
 export const bundles = pgTable("bundles_bt", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
@@ -25,9 +24,8 @@ export const bundles = pgTable("bundles_bt", {
 });
 
 export const bundlesRelations = relations(bundles, ({ one, many }) => ({
-    packagingUnit: one(packagingUnits),
-    package: one(packages),
-    palette: one(palettes),
+    sellingUnit: one(sellingUnits),
+    nestable: one(nestables),
 }));
 
 export type Bundle = typeof bundles.$inferSelect;

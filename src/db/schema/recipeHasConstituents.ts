@@ -49,5 +49,5 @@ export const recipeHasConstituentsRelations = relations(recipeHasConstituents, (
     }),
 }));
 
-export type RecipeHasIngredient = typeof recipeHasConstituents.$inferSelect;
-export type NewRecipeHasIngredient = typeof recipeHasConstituents.$inferInsert;
+export type RecipeHasConstituent = typeof recipeHasConstituents.$inferSelect;
+export type NewRecipeHasConstituent = typeof recipeHasConstituents.$inferInsert;

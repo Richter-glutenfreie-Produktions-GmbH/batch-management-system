@@ -2,7 +2,6 @@ import { relations } from "drizzle-orm";
 import { boolean, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 import { constituents } from "./constituents";
-import { recipeHasConstituents } from "./recipeHasConstituents";
 
 export const ingredients = pgTable("ingredients", {
     id: uuid("id")
@@ -23,7 +22,6 @@ export const ingredientsRelations = relations(ingredients, ({ one, many }) => ({
         fields: [ingredients.id],
         references: [constituents.id],
     }),
-    recipeHasConstituents: many(recipeHasConstituents),
 }));
 
 export type Ingredient = typeof ingredients.$inferSelect;

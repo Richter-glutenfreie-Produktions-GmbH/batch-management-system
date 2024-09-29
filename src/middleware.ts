@@ -1,12 +1,16 @@
+import createMiddleware from "next-intl/middleware";
 import { type NextRequest } from "next/server";
 
-import { handleI18nRouting } from "@/utils/i18n/middleware";
-import { updateSession } from "@/utils/supabase/middleware";
+import { routing } from "./i18n/routing";
+import { updateSession } from "./utils/supabase/middleware";
+
+const handleI18nRouting = createMiddleware(routing);
 
 export async function middleware(request: NextRequest) {
-    let response = await handleI18nRouting(request);
-    await updateSession(request);
-    return response;
+    const response = handleI18nRouting(request);
+
+    // A `response` can now be passed here
+    return await updateSession(request, response);
 }
 
 export const config = {

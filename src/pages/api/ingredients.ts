@@ -5,7 +5,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
         const ingredients = await db.query.ingredients.findMany({
             with: {
-                recipeHasIngredients: true,
+                recipeHasConstituents: true,
             },
         });
         console.log(ingredients);

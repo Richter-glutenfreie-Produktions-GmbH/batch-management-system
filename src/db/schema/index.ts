@@ -1,74 +1,74 @@
-export { batches } from "./batches";
+export { batches, batchesRelations } from "./batches";
 export type { Batch, NewBatch } from "./batches";
 
-export { bundles } from "./bundles";
+export { bundles, bundlesRelations } from "./bundles";
 export type { Bundle, NewBundle } from "./bundles";
 
 export { configurations } from "./configurations";
 export type { Configuration, NewConfiguration } from "./configurations";
 
-export { constituents } from "./constituents";
+export { constituents, constituentsRelations } from "./constituents";
 export type { Constituent, NewConstituent } from "./constituents";
 
-export { customers } from "./customers";
+export { customers, customersRelations } from "./customers";
 export type { Customer, NewCustomer } from "./customers";
 
-export { doughs } from "./doughs";
+export { doughs, doughsRelations } from "./doughs";
 export type { Dough, NewDough } from "./doughs";
 
-export { ingredients } from "./ingredients";
+export { ingredients, ingredientsRelations } from "./ingredients";
 export type { Ingredient, NewIngredient } from "./ingredients";
 
-export { manufacturedBatches } from "./manufacturedBatches";
+export { manufacturedBatches, manufacturedBatchesRelations } from "./manufacturedBatches";
 export type { ManufacturedBatch, NewManufacturedBatch } from "./manufacturedBatches";
 
-export { nestables } from "./nestables";
+export { nestables, nestablesRelations } from "./nestables";
 export type { Nestable, NewNestable } from "./nestables";
 
-export { packageHierarchies } from "./packageHierarchies";
+export { packageHierarchies, packageHierarchiesRelations } from "./packageHierarchies";
 export type { PackageHierarchy, NewPackageHierarchy } from "./packageHierarchies";
 
-export { packages } from "./packages";
+export { packages, packagesRelations } from "./packages";
 export type { Package, NewPackage } from "./packages";
 
-export { palettes } from "./palettes";
+export { palettes, palettesRelations } from "./palettes";
 export type { Palette, NewPalette } from "./palettes";
 
-export { products } from "./products";
+export { products, productsRelations } from "./products";
 export type { Product, NewProduct } from "./products";
 
-export { rawMaterials } from "./rawMaterials";
+export { rawMaterials, rawMaterialsRelations } from "./rawMaterials";
 export type { RawMaterial, NewRawMaterial } from "./rawMaterials";
 
-export { receivedBatches } from "./receivedBatches";
+export { receivedBatches, receivedBatchesRelations } from "./receivedBatches";
 export type { ReceivedBatch, NewReceivedBatch } from "./receivedBatches";
 
-export { recipeHasConstituents } from "./recipeHasConstituents";
+export { recipeHasConstituents, recipeHasConstituentsRelations } from "./recipeHasConstituents";
 export type { RecipeHasConstituent, NewRecipeHasConstituent } from "./recipeHasConstituents";
 
-export { recipes } from "./recipes";
+export { recipes, recipesRelations } from "./recipes";
 export type { Recipe, NewRecipe } from "./recipes";
 
-export { sellingUnitHierarchies } from "./sellingUnitHierarchies";
+export { sellingUnitHierarchies, sellingUnitHierarchiesRelations } from "./sellingUnitHierarchies";
 export type { SellingUnitHierarchy, NewSellingUnitHierarchy } from "./sellingUnitHierarchies";
 
-export { sellingUnits } from "./sellingUnits";
+export { sellingUnits, sellingUnitsRelations } from "./sellingUnits";
 export type { SellingUnit, NewSellingUnit } from "./sellingUnits";
 
-export { settings } from "./settings";
+export { settings, settingsRelations } from "./settings";
 export type { Setting, NewSetting } from "./settings";
 
-export { supplyItems } from "./supplyItems";
+export { supplyItems, supplyItemsRelations } from "./supplyItems";
 export type { SupplyItem, NewSupplyItem } from "./supplyItems";
 
-export { tenants } from "./tenants";
+export { tenants, tenantsRelations } from "./tenants";
 export type { Tenant, NewTenant } from "./tenants";
 
-export { unitConversions } from "./unitConversions";
+export { unitConversions, unitConversionsRelations } from "./unitConversions";
 export type { UnitConversion, NewUnitConversion } from "./unitConversions";
 
-export { units } from "./units";
+export { units, unitsRelations } from "./units";
 export type { Unit, NewUnit } from "./units";
 
-export { users } from "./users";
+export { users, usersRelations } from "./users";
 export type { User, NewUser } from "./users";

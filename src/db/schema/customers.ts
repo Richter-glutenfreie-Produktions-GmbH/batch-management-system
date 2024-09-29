@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import { pgTable, text, uuid } from "drizzle-orm/pg-core";
 
 export const customers = pgTable("customers", {
@@ -5,6 +6,8 @@ export const customers = pgTable("customers", {
     name: text("name").notNull(),
     description: text("description"),
 });
+
+export const customersRelations = relations(customers, ({ one, many }) => ({}));
 
 export type Customer = typeof customers.$inferSelect;
 export type NewCustomer = typeof customers.$inferInsert;

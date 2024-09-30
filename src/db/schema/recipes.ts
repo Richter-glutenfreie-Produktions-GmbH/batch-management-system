@@ -11,7 +11,10 @@ export const recipes = pgTable("recipes", {
     goodId: uuid("good_id")
         .notNull()
         .references(() => goods.id, { onDelete: "cascade", onUpdate: "cascade" }),
-    predecessorId: uuid("recipe_id").references((): AnyPgColumn => recipes.id),
+    predecessorId: uuid("predecessor_id").references((): AnyPgColumn => recipes.id, {
+        onDelete: "set default",
+        onUpdate: "set default",
+    }),
     insertedAt: timestamp("inserted_at", {
         mode: "date",
         precision: 3,

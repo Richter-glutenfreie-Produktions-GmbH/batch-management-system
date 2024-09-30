@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 import { batches } from "./batches";
 import { bundles } from "./bundles";
@@ -27,6 +27,21 @@ import { users } from "./users";
 export const tenants = pgTable("tenants", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
     name: text("name").notNull(),
+    insertedAt: timestamp("inserted_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
+        .notNull()
+        .defaultNow(),
+    updatedAt: timestamp("updated_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
+        .notNull()
+        .defaultNow()
+        .$onUpdate(() => new Date()),
 });
 
 export const tenantsRelations = relations(tenants, ({ one, many }) => ({

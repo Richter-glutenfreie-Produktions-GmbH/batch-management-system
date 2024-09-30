@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { AnyPgColumn, pgTable, uuid } from "drizzle-orm/pg-core";
+import { AnyPgColumn, pgTable, timestamp, uuid } from "drizzle-orm/pg-core";
 
 import { goods } from "./goods";
 import { recipes } from "./recipes";
@@ -11,6 +11,21 @@ export const doughs = pgTable("doughs", {
         .primaryKey()
         .references(() => goods.id, { onDelete: "cascade" }),
     currentRecipeId: uuid("current_recipe_id").references((): AnyPgColumn => recipes.id),
+    insertedAt: timestamp("inserted_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
+        .notNull()
+        .defaultNow(),
+    updatedAt: timestamp("updated_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
+        .notNull()
+        .defaultNow()
+        .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
         .references(() => tenants.id, { onDelete: "cascade" }),

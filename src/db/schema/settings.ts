@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 import { tenants } from "./tenants";
 import { users } from "./users";
@@ -11,6 +11,21 @@ export const settings = pgTable("settings", {
         .references(() => users.id, { onDelete: "cascade" }),
     name: text("name").notNull(),
     value: text("value").notNull(),
+    insertedAt: timestamp("inserted_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
+        .notNull()
+        .defaultNow(),
+    updatedAt: timestamp("updated_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
+        .notNull()
+        .defaultNow()
+        .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
         .references(() => tenants.id, { onDelete: "cascade" }),

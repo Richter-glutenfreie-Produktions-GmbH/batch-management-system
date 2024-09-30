@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, uuid } from "drizzle-orm/pg-core";
+import { pgTable, timestamp, uuid } from "drizzle-orm/pg-core";
 
 import { bundles } from "./bundles";
 import { packages } from "./packages";
@@ -12,6 +12,21 @@ export const nestables = pgTable("nestables_bt", {
         .notNull()
         .primaryKey()
         .references(() => bundles.id, { onDelete: "cascade" }),
+    insertedAt: timestamp("inserted_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
+        .notNull()
+        .defaultNow(),
+    updatedAt: timestamp("updated_at", {
+        mode: "date",
+        precision: 3,
+        withTimezone: false,
+    })
+        .notNull()
+        .defaultNow()
+        .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
         .references(() => tenants.id, { onDelete: "cascade" }),

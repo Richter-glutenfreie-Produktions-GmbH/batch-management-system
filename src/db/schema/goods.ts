@@ -1,17 +1,32 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, unique, uuid } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
 
 import { constituents } from "./constituents";
 import { tenants } from "./tenants";
 
 export const goods = pgTable(
-    "goods",
+    "goods_bt",
     {
         id: uuid("id")
             .notNull()
             .primaryKey()
             .references(() => constituents.id, { onDelete: "cascade" }),
         number: text("number").notNull(),
+        insertedAt: timestamp("inserted_at", {
+            mode: "date",
+            precision: 3,
+            withTimezone: false,
+        })
+            .notNull()
+            .defaultNow(),
+        updatedAt: timestamp("updated_at", {
+            mode: "date",
+            precision: 3,
+            withTimezone: false,
+        })
+            .notNull()
+            .defaultNow()
+            .$onUpdate(() => new Date()),
         tenantId: uuid("tenant_id")
             .notNull()
             .references(() => tenants.id, { onDelete: "cascade" }),

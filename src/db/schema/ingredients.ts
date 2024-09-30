@@ -18,6 +18,21 @@ export const ingredients = pgTable(
         isVegetarian: boolean("is_vegetarian").notNull().default(false),
         isTurkishHalal: boolean("is_turkish_halal").notNull().default(true),
         isJewishKosher: boolean("is_jewish_kosher").notNull().default(true),
+        insertedAt: timestamp("inserted_at", {
+            mode: "date",
+            precision: 3,
+            withTimezone: false,
+        })
+            .notNull()
+            .defaultNow(),
+        updatedAt: timestamp("updated_at", {
+            mode: "date",
+            precision: 3,
+            withTimezone: false,
+        })
+            .notNull()
+            .defaultNow()
+            .$onUpdate(() => new Date()),
         tenantId: uuid("tenant_id")
             .notNull()
             .references(() => tenants.id, { onDelete: "cascade" }),

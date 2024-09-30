@@ -3,12 +3,16 @@ import { pgTable, uuid } from "drizzle-orm/pg-core";
 
 import { nestables } from "./nestables";
 import { packageHierarchies } from "./packageHierarchies";
+import { tenants } from "./tenants";
 
 export const palettes = pgTable("palettes", {
     id: uuid("id")
         .notNull()
         .primaryKey()
         .references(() => nestables.id, { onDelete: "cascade" }),
+    tenantId: uuid("tenant_id")
+        .notNull()
+        .references(() => tenants.id, { onDelete: "cascade" }),
 });
 
 export const palettesRelations = relations(palettes, ({ one, many }) => ({
@@ -17,6 +21,10 @@ export const palettesRelations = relations(palettes, ({ one, many }) => ({
         references: [nestables.id],
     }),
     children: many(packageHierarchies),
+    tenant: one(tenants, {
+        fields: [palettes.tenantId],
+        references: [tenants.id],
+    }),
 }));
 
 export type Palette = typeof palettes.$inferSelect;

@@ -3,6 +3,7 @@ import { boolean, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 import { products } from "./products";
 import { recipeHasConstituents } from "./recipeHasConstituents";
+import { tenants } from "./tenants";
 
 export const recipes = pgTable("recipes", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
@@ -26,6 +27,9 @@ export const recipes = pgTable("recipes", {
         .notNull()
         .defaultNow()
         .$onUpdate(() => new Date()),
+    tenantId: uuid("tenant_id")
+        .notNull()
+        .references(() => tenants.id, { onDelete: "cascade" }),
 });
 
 export const recipesRelations = relations(recipes, ({ one, many }) => ({
@@ -33,8 +37,11 @@ export const recipesRelations = relations(recipes, ({ one, many }) => ({
         fields: [recipes.productId],
         references: [products.id],
     }),
-    // productBatches: many(productBatches),
     recipeHasConstituents: many(recipeHasConstituents),
+    tenant: one(tenants, {
+        fields: [recipes.tenantId],
+        references: [tenants.id],
+    }),
 }));
 
 export type Recipe = typeof recipes.$inferSelect;

@@ -2,6 +2,7 @@ import { relations } from "drizzle-orm";
 import { date, pgTable, uuid } from "drizzle-orm/pg-core";
 
 import { batches } from "./batches";
+import { tenants } from "./tenants";
 
 export const manufacturedBatches = pgTable("manufactured_batches", {
     id: uuid("id")
@@ -9,6 +10,9 @@ export const manufacturedBatches = pgTable("manufactured_batches", {
         .primaryKey()
         .references(() => batches.id, { onDelete: "cascade" }),
     manufacturedOn: date("manufactured_on").notNull().defaultNow(),
+    tenantId: uuid("tenant_id")
+        .notNull()
+        .references(() => tenants.id, { onDelete: "cascade" }),
 });
 
 export const manufacturedBatchesRelations = relations(manufacturedBatches, ({ one, many }) => ({
@@ -16,7 +20,10 @@ export const manufacturedBatchesRelations = relations(manufacturedBatches, ({ on
         fields: [manufacturedBatches.id],
         references: [batches.id],
     }),
-    // productBatches: many(productBatches),
+    tenant: one(tenants, {
+        fields: [manufacturedBatches.tenantId],
+        references: [tenants.id],
+    }),
 }));
 
 export type ManufacturedBatch = typeof manufacturedBatches.$inferSelect;

@@ -3,6 +3,7 @@ import { pgTable, uuid } from "drizzle-orm/pg-core";
 
 import { nestables } from "./nestables";
 import { sellingUnits } from "./sellingUnits";
+import { tenants } from "./tenants";
 
 export const sellingUnitHierarchies = pgTable("selling_unit_hierarchies", {
     id: uuid("id")
@@ -12,6 +13,9 @@ export const sellingUnitHierarchies = pgTable("selling_unit_hierarchies", {
     parentId: uuid("parent_id")
         .notNull()
         .references(() => nestables.id, { onDelete: "cascade" }),
+    tenantId: uuid("tenant_id")
+        .notNull()
+        .references(() => tenants.id, { onDelete: "cascade" }),
 });
 
 export const sellingUnitHierarchiesRelations = relations(sellingUnitHierarchies, ({ one, many }) => ({
@@ -22,6 +26,10 @@ export const sellingUnitHierarchiesRelations = relations(sellingUnitHierarchies,
     parent: one(nestables, {
         fields: [sellingUnitHierarchies.parentId],
         references: [nestables.id],
+    }),
+    tenant: one(tenants, {
+        fields: [sellingUnitHierarchies.tenantId],
+        references: [tenants.id],
     }),
 }));
 

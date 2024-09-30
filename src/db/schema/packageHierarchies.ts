@@ -3,6 +3,7 @@ import { pgTable, uuid } from "drizzle-orm/pg-core";
 
 import { packages } from "./packages";
 import { palettes } from "./palettes";
+import { tenants } from "./tenants";
 
 export const packageHierarchies = pgTable("package_hierarchies", {
     id: uuid("id")
@@ -12,6 +13,9 @@ export const packageHierarchies = pgTable("package_hierarchies", {
     parentId: uuid("parent_id")
         .notNull()
         .references(() => palettes.id, { onDelete: "cascade" }),
+    tenantId: uuid("tenant_id")
+        .notNull()
+        .references(() => tenants.id, { onDelete: "cascade" }),
 });
 
 export const packageHierarchiesRelations = relations(packageHierarchies, ({ one, many }) => ({
@@ -22,6 +26,10 @@ export const packageHierarchiesRelations = relations(packageHierarchies, ({ one,
     parent: one(palettes, {
         fields: [packageHierarchies.parentId],
         references: [palettes.id],
+    }),
+    tenant: one(tenants, {
+        fields: [packageHierarchies.tenantId],
+        references: [tenants.id],
     }),
 }));
 

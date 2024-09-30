@@ -10,11 +10,11 @@ export type { Configuration, NewConfiguration } from "./configurations";
 export { constituents, constituentsRelations } from "./constituents";
 export type { Constituent, NewConstituent } from "./constituents";
 
-export { customers, customersRelations } from "./customers";
-export type { Customer, NewCustomer } from "./customers";
-
 export { doughs, doughsRelations } from "./doughs";
 export type { Dough, NewDough } from "./doughs";
+
+export { goods, goodsRelations } from "./goods";
+export type { Good, NewGood } from "./goods";
 
 export { ingredients, ingredientsRelations } from "./ingredients";
 export type { Ingredient, NewIngredient } from "./ingredients";
@@ -57,9 +57,6 @@ export type { SellingUnit, NewSellingUnit } from "./sellingUnits";
 
 export { settings, settingsRelations } from "./settings";
 export type { Setting, NewSetting } from "./settings";
-
-export { supplyItems, supplyItemsRelations } from "./supplyItems";
-export type { SupplyItem, NewSupplyItem } from "./supplyItems";
 
 export { tenants, tenantsRelations } from "./tenants";
 export type { Tenant, NewTenant } from "./tenants";

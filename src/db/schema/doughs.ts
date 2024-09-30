@@ -1,19 +1,33 @@
 import { relations } from "drizzle-orm";
-import { pgTable, uuid } from "drizzle-orm/pg-core";
+import { AnyPgColumn, pgTable, uuid } from "drizzle-orm/pg-core";
 
-import { constituents } from "./constituents";
+import { goods } from "./goods";
+import { recipes } from "./recipes";
+import { tenants } from "./tenants";
 
 export const doughs = pgTable("doughs", {
     id: uuid("id")
         .notNull()
         .primaryKey()
-        .references(() => constituents.id, { onDelete: "cascade" }),
+        .references(() => goods.id, { onDelete: "cascade" }),
+    currentRecipeId: uuid("current_recipe_id").references((): AnyPgColumn => recipes.id),
+    tenantId: uuid("tenant_id")
+        .notNull()
+        .references(() => tenants.id, { onDelete: "cascade" }),
 });
 
 export const doughsRelations = relations(doughs, ({ one }) => ({
-    constituent: one(constituents, {
+    good: one(goods, {
         fields: [doughs.id],
-        references: [constituents.id],
+        references: [goods.id],
+    }),
+    currentRecipe: one(recipes, {
+        fields: [doughs.currentRecipeId],
+        references: [recipes.id],
+    }),
+    tenant: one(tenants, {
+        fields: [doughs.tenantId],
+        references: [tenants.id],
     }),
 }));
 

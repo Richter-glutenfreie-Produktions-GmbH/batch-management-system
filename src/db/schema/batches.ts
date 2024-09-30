@@ -1,7 +1,8 @@
 import { relations, sql } from "drizzle-orm";
 import { date, doublePrecision, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
-import { units } from "./units";
+import { sellingUnits } from "./sellingUnits";
+import { tenants } from "./tenants";
 
 export const batches = pgTable("batches_bt", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
@@ -10,10 +11,6 @@ export const batches = pgTable("batches_bt", {
         .notNull()
         .default(sql`CURRENT_TIMESTAMP + INTERVAL '1 year'`),
     note: text("note"),
-    massValue: doublePrecision("mass_value").notNull(),
-    massUnitId: uuid("mass_unit_id")
-        .notNull()
-        .references(() => units.id, { onDelete: "cascade" }),
     insertedAt: timestamp("inserted_at", {
         mode: "date",
         precision: 3,
@@ -29,12 +26,16 @@ export const batches = pgTable("batches_bt", {
         .notNull()
         .defaultNow()
         .$onUpdate(() => new Date()),
+    tenantId: uuid("tenant_id")
+        .notNull()
+        .references(() => tenants.id, { onDelete: "cascade" }),
 });
 
 export const batchesRelations = relations(batches, ({ one, many }) => ({
-    massUnit: one(units, {
-        fields: [batches.massUnitId],
-        references: [units.id],
+    sellingUnits: many(sellingUnits),
+    tenant: one(tenants, {
+        fields: [batches.tenantId],
+        references: [tenants.id],
     }),
 }));
 

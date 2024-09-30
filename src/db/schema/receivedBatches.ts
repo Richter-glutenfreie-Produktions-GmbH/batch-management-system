@@ -9,7 +9,7 @@ export const receivedBatches = pgTable("received_batches", {
     id: uuid("id")
         .notNull()
         .primaryKey()
-        .references(() => batches.id, { onDelete: "cascade" }),
+        .references(() => batches.id, { onDelete: "cascade", onUpdate: "cascade" }),
     deliveredOn: date("delivered_on").notNull().defaultNow(),
     insertedAt: timestamp("inserted_at", {
         mode: "date",
@@ -28,7 +28,7 @@ export const receivedBatches = pgTable("received_batches", {
         .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
-        .references(() => tenants.id, { onDelete: "cascade" }),
+        .references(() => tenants.id),
 });
 
 export const receivedBatchesRelations = relations(receivedBatches, ({ one, many }) => ({

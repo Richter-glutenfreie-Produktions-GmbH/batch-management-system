@@ -10,10 +10,10 @@ export const recipeHasConstituents = pgTable(
     {
         constituentId: uuid("constituent_id")
             .notNull()
-            .references(() => constituents.id, { onDelete: "cascade" }),
+            .references(() => constituents.id, { onDelete: "cascade", onUpdate: "cascade" }),
         recipeId: uuid("recipe_id")
             .notNull()
-            .references(() => recipes.id, { onDelete: "cascade" }),
+            .references(() => recipes.id, { onDelete: "cascade", onUpdate: "cascade" }),
         insertedAt: timestamp("inserted_at", {
             mode: "date",
             precision: 3,
@@ -31,7 +31,7 @@ export const recipeHasConstituents = pgTable(
             .$onUpdate(() => new Date()),
         tenantId: uuid("tenant_id")
             .notNull()
-            .references(() => tenants.id, { onDelete: "cascade" }),
+            .references(() => tenants.id),
     },
     (table) => ({
         pk: primaryKey(table.constituentId, table.recipeId),

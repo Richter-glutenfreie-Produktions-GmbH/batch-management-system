@@ -22,7 +22,7 @@ export const manufacturedPackages = pgTable("manufactured_packages", {
         .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
-        .references(() => tenants.id, { onDelete: "cascade" }),
+        .references(() => tenants.id),
 });
 
 export const manufacturedPackagesRelations = relations(manufacturedPackages, ({ one, many }) => ({

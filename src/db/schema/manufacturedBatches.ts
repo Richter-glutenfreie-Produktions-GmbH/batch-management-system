@@ -8,7 +8,7 @@ export const manufacturedBatches = pgTable("manufactured_batches", {
     id: uuid("id")
         .notNull()
         .primaryKey()
-        .references(() => batches.id, { onDelete: "cascade" }),
+        .references(() => batches.id, { onDelete: "cascade", onUpdate: "cascade" }),
     manufacturedOn: date("manufactured_on").notNull().defaultNow(),
     insertedAt: timestamp("inserted_at", {
         mode: "date",
@@ -27,7 +27,7 @@ export const manufacturedBatches = pgTable("manufactured_batches", {
         .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
-        .references(() => tenants.id, { onDelete: "cascade" }),
+        .references(() => tenants.id),
 });
 
 export const manufacturedBatchesRelations = relations(manufacturedBatches, ({ one, many }) => ({

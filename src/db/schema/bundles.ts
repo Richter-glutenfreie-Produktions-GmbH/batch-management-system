@@ -24,7 +24,7 @@ export const bundles = pgTable("bundles_bt", {
         .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
-        .references(() => tenants.id, { onDelete: "cascade" }),
+        .references(() => tenants.id),
 });
 
 export const bundlesRelations = relations(bundles, ({ one, many }) => ({

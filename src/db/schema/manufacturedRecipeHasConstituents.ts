@@ -22,7 +22,7 @@ export const manufacturedRecipeHasConstituents = pgTable("manufactured_recipe_ha
         .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
-        .references(() => tenants.id, { onDelete: "cascade" }),
+        .references(() => tenants.id),
 });
 
 export const manufacturedRecipeHasConstituentsRelations = relations(

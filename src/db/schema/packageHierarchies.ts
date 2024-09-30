@@ -9,10 +9,10 @@ export const packageHierarchies = pgTable("package_hierarchies", {
     id: uuid("id")
         .notNull()
         .primaryKey()
-        .references(() => packages.id, { onDelete: "cascade" }),
+        .references(() => packages.id, { onDelete: "cascade", onUpdate: "cascade" }),
     parentId: uuid("parent_id")
         .notNull()
-        .references(() => palettes.id, { onDelete: "cascade" }),
+        .references(() => palettes.id, { onDelete: "cascade", onUpdate: "cascade" }),
     insertedAt: timestamp("inserted_at", {
         mode: "date",
         precision: 3,
@@ -30,7 +30,7 @@ export const packageHierarchies = pgTable("package_hierarchies", {
         .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
-        .references(() => tenants.id, { onDelete: "cascade" }),
+        .references(() => tenants.id),
 });
 
 export const packageHierarchiesRelations = relations(packageHierarchies, ({ one, many }) => ({

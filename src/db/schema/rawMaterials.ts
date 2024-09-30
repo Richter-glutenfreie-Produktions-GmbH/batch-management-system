@@ -11,10 +11,10 @@ export const rawMaterials = pgTable(
         id: uuid("id").notNull().primaryKey().defaultRandom(),
         ingredientId: uuid("ingredient_id")
             .notNull()
-            .references(() => ingredients.id, { onDelete: "cascade" }),
+            .references(() => ingredients.id, { onDelete: "cascade", onUpdate: "cascade" }),
         batchId: uuid("received_batches_id")
             .notNull()
-            .references(() => receivedBatches.id, { onDelete: "cascade" }),
+            .references(() => receivedBatches.id, { onDelete: "cascade", onUpdate: "cascade" }),
         number: text("number").notNull(),
         overrideIsVegan: boolean("override_is_vegan"),
         overrideIsVegetarian: boolean("override_is_vegetarian"),
@@ -37,7 +37,7 @@ export const rawMaterials = pgTable(
             .$onUpdate(() => new Date()),
         tenantId: uuid("tenant_id")
             .notNull()
-            .references(() => tenants.id, { onDelete: "cascade" }),
+            .references(() => tenants.id),
     },
     (t) => ({
         unq: unique().on(t.tenantId, t.number),

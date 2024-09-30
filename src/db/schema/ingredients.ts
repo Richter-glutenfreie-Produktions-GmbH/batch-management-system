@@ -10,7 +10,7 @@ export const ingredients = pgTable(
         id: uuid("id")
             .notNull()
             .primaryKey()
-            .references(() => constituents.id, { onDelete: "cascade" }),
+            .references(() => constituents.id, { onDelete: "cascade", onUpdate: "cascade" }),
         number: text("number").notNull(),
         name: text("name").notNull(),
         description: text("description"),
@@ -35,7 +35,7 @@ export const ingredients = pgTable(
             .$onUpdate(() => new Date()),
         tenantId: uuid("tenant_id")
             .notNull()
-            .references(() => tenants.id, { onDelete: "cascade" }),
+            .references(() => tenants.id),
     },
     (t) => ({
         unq: unique().on(t.tenantId, t.number),

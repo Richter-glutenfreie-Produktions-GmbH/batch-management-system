@@ -9,7 +9,7 @@ export const palettes = pgTable("palettes", {
     id: uuid("id")
         .notNull()
         .primaryKey()
-        .references(() => nestables.id, { onDelete: "cascade" }),
+        .references(() => nestables.id, { onDelete: "cascade", onUpdate: "cascade" }),
     insertedAt: timestamp("inserted_at", {
         mode: "date",
         precision: 3,
@@ -27,7 +27,7 @@ export const palettes = pgTable("palettes", {
         .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
-        .references(() => tenants.id, { onDelete: "cascade" }),
+        .references(() => tenants.id),
 });
 
 export const palettesRelations = relations(palettes, ({ one, many }) => ({

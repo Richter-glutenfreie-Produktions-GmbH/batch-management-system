@@ -22,6 +22,60 @@ export type { Ingredient, NewIngredient } from "./ingredients";
 export { manufacturedBatches, manufacturedBatchesRelations } from "./manufacturedBatches";
 export type { ManufacturedBatch, NewManufacturedBatch } from "./manufacturedBatches";
 
+export { manufacturedBundles, manufacturedBundlesRelations } from "./manufacturedBundles";
+export type { ManufacturedBundle, NewManufacturedBundle } from "./manufacturedBundles";
+
+export { manufacturedConstituents, manufacturedConstituentsRelations } from "./manufacturedConstituents";
+export type { ManufacturedConstituent, NewManufacturedConstituent } from "./manufacturedConstituents";
+
+export { manufacturedDoughs, manufacturedDoughsRelations } from "./manufacturedDoughs";
+export type { ManufacturedDough, NewManufacturedDough } from "./manufacturedDoughs";
+
+export { manufacturedGoods, manufacturedGoodsRelations } from "./manufacturedGoods";
+export type { ManufacturedGood, NewManufacturedGood } from "./manufacturedGoods";
+
+export { manufacturedNestables, manufacturedNestablesRelations } from "./manufacturedNestables";
+export type { ManufacturedNestable, NewManufacturedNestable } from "./manufacturedNestables";
+
+export {
+    manufacturedPackageHierarchies,
+    manufacturedPackageHierarchiesRelations,
+} from "./manufacturedPackageHierarchies";
+export type { ManufacturedPackageHierarchy, NewManufacturedPackageHierarchy } from "./manufacturedPackageHierarchies";
+
+export { manufacturedPackages, manufacturedPackagesRelations } from "./manufacturedPackages";
+export type { ManufacturedPackage, NewManufacturedPackage } from "./manufacturedPackages";
+
+export { manufacturedPalettes, manufacturedPalettesRelations } from "./manufacturedPalettes";
+export type { ManufacturedPalette, NewManufacturedPalette } from "./manufacturedPalettes";
+
+export { manufacturedProducts, manufacturedProductsRelations } from "./manufacturedProducts";
+export type { ManufacturedProduct, NewManufacturedProduct } from "./manufacturedProducts";
+
+export {
+    manufacturedRecipeHasConstituents,
+    manufacturedRecipeHasConstituentsRelations,
+} from "./manufacturedRecipeHasConstituents";
+export type {
+    ManufacturedRecipeHasConstituent,
+    NewManufacturedRecipeHasConstituent,
+} from "./manufacturedRecipeHasConstituents";
+
+export { manufacturedRecipes, manufacturedRecipesRelations } from "./manufacturedRecipes";
+export type { ManufacturedRecipe, NewManufacturedRecipe } from "./manufacturedRecipes";
+
+export {
+    manufacturedSellingUnitHierarchies,
+    manufacturedSellingUnitHierarchiesRelations,
+} from "./manufacturedSellingUnitHierarchies";
+export type {
+    ManufacturedSellingUnitHierarchy,
+    NewManufacturedSellingUnitHierarchy,
+} from "./manufacturedSellingUnitHierarchies";
+
+export { manufacturedSellingUnits, manufacturedSellingUnitsRelations } from "./manufacturedSellingUnits";
+export type { ManufacturedSellingUnit, NewManufacturedSellingUnit } from "./manufacturedSellingUnits";
+
 export { nestables, nestablesRelations } from "./nestables";
 export type { Nestable, NewNestable } from "./nestables";
 

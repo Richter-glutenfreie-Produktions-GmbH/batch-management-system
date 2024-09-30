@@ -1,9 +1,8 @@
 import { relations } from "drizzle-orm";
 import { pgTable, timestamp, uuid } from "drizzle-orm/pg-core";
 
-import { doughs } from "./doughs";
+import { goods } from "./goods";
 import { ingredients } from "./ingredients";
-import { products } from "./products";
 import { recipeHasConstituents } from "./recipeHasConstituents";
 import { tenants } from "./tenants";
 
@@ -26,13 +25,12 @@ export const constituents = pgTable("constituents_bt", {
         .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
-        .references(() => tenants.id, { onDelete: "cascade" }),
+        .references(() => tenants.id),
 });
 
 export const constituentsRelations = relations(constituents, ({ one, many }) => ({
     ingredient: one(ingredients),
-    product: one(products),
-    dough: one(doughs),
+    good: one(goods),
     recipeHasConstituents: many(recipeHasConstituents),
     tenant: one(tenants, {
         fields: [constituents.tenantId],

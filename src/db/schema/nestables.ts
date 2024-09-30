@@ -11,7 +11,7 @@ export const nestables = pgTable("nestables_bt", {
     id: uuid("id")
         .notNull()
         .primaryKey()
-        .references(() => bundles.id, { onDelete: "cascade" }),
+        .references(() => bundles.id, { onDelete: "cascade", onUpdate: "cascade" }),
     insertedAt: timestamp("inserted_at", {
         mode: "date",
         precision: 3,
@@ -29,7 +29,7 @@ export const nestables = pgTable("nestables_bt", {
         .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
-        .references(() => tenants.id, { onDelete: "cascade" }),
+        .references(() => tenants.id),
 });
 
 export const nestablesRelations = relations(nestables, ({ one, many }) => ({

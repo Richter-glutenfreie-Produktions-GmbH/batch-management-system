@@ -22,7 +22,7 @@ export const manufacturedDoughs = pgTable("manufactured_doughs", {
         .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
-        .references(() => tenants.id, { onDelete: "cascade" }),
+        .references(() => tenants.id),
 });
 
 export const manufacturedDoughsRelations = relations(manufacturedDoughs, ({ one, many }) => ({

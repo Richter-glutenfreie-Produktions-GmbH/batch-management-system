@@ -5,14 +5,14 @@ import { tenants } from "./tenants";
 import { units } from "./units";
 
 export const unitConversions = pgTable(
-    "unit_conversions",
+    "unit_conversions_jt",
     {
         fromUnitId: uuid("from_unit_id")
             .notNull()
-            .references(() => units.id, { onDelete: "cascade" }),
+            .references(() => units.id, { onDelete: "cascade", onUpdate: "cascade" }),
         toUnitId: uuid("to_unit_id")
             .notNull()
-            .references(() => units.id, { onDelete: "cascade" }),
+            .references(() => units.id, { onDelete: "cascade", onUpdate: "cascade" }),
         conversionFactor: doublePrecision("conversion_factor").notNull(),
         description: text("description"),
         insertedAt: timestamp("inserted_at", {
@@ -32,7 +32,7 @@ export const unitConversions = pgTable(
             .$onUpdate(() => new Date()),
         tenantId: uuid("tenant_id")
             .notNull()
-            .references(() => tenants.id, { onDelete: "cascade" }),
+            .references(() => tenants.id),
     },
     (table) => ({
         pk: primaryKey(table.fromUnitId, table.toUnitId),

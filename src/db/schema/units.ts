@@ -27,7 +27,7 @@ export const units = pgTable("units", {
         .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
-        .references(() => tenants.id, { onDelete: "cascade" }),
+        .references(() => tenants.id),
 });
 
 export const unitsRelations = relations(units, ({ one, many }) => ({

@@ -9,7 +9,7 @@ export const sellingUnits = pgTable("selling_units", {
     id: uuid("id")
         .notNull()
         .primaryKey()
-        .references(() => bundles.id, { onDelete: "cascade" }),
+        .references(() => bundles.id, { onDelete: "cascade", onUpdate: "cascade" }),
     insertedAt: timestamp("inserted_at", {
         mode: "date",
         precision: 3,
@@ -27,7 +27,7 @@ export const sellingUnits = pgTable("selling_units", {
         .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
-        .references(() => tenants.id, { onDelete: "cascade" }),
+        .references(() => tenants.id),
 });
 
 export const sellingUnitsRelations = relations(sellingUnits, ({ one, many }) => ({

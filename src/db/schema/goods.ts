@@ -1,7 +1,8 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
+import { AnyPgColumn, pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
 
 import { constituents } from "./constituents";
+import { recipes } from "./recipes";
 import { tenants } from "./tenants";
 
 export const goods = pgTable(
@@ -10,7 +11,8 @@ export const goods = pgTable(
         id: uuid("id")
             .notNull()
             .primaryKey()
-            .references(() => constituents.id, { onDelete: "cascade" }),
+            .references(() => constituents.id, { onDelete: "cascade", onUpdate: "cascade" }),
+        currentRecipeId: uuid("current_recipe_id").references((): AnyPgColumn => recipes.id),
         number: text("number").notNull(),
         insertedAt: timestamp("inserted_at", {
             mode: "date",
@@ -29,7 +31,7 @@ export const goods = pgTable(
             .$onUpdate(() => new Date()),
         tenantId: uuid("tenant_id")
             .notNull()
-            .references(() => tenants.id, { onDelete: "cascade" }),
+            .references(() => tenants.id),
     },
     (t) => ({
         unq: unique().on(t.tenantId, t.number),
@@ -41,6 +43,11 @@ export const goodsRelations = relations(goods, ({ one, many }) => ({
         fields: [goods.id],
         references: [constituents.id],
     }),
+    currentRecipe: one(recipes, {
+        fields: [goods.currentRecipeId],
+        references: [recipes.id],
+    }),
+    recipes: many(recipes),
     tenant: one(tenants, {
         fields: [goods.tenantId],
         references: [tenants.id],

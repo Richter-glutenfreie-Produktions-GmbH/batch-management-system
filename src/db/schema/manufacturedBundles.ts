@@ -22,7 +22,7 @@ export const manufacturedBundles = pgTable("manufactured_bundles_bt", {
         .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
-        .references(() => tenants.id, { onDelete: "cascade" }),
+        .references(() => tenants.id),
 });
 
 export const manufacturedBundlesRelations = relations(manufacturedBundles, ({ one, many }) => ({

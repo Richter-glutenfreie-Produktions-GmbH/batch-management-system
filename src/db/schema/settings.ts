@@ -8,7 +8,7 @@ export const settings = pgTable("settings", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
     userId: uuid("user_id")
         .notNull()
-        .references(() => users.id, { onDelete: "cascade" }),
+        .references(() => users.id, { onDelete: "cascade", onUpdate: "cascade" }),
     name: text("name").notNull(),
     value: text("value").notNull(),
     insertedAt: timestamp("inserted_at", {
@@ -28,7 +28,7 @@ export const settings = pgTable("settings", {
         .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
-        .references(() => tenants.id, { onDelete: "cascade" }),
+        .references(() => tenants.id),
 });
 
 export const settingsRelations = relations(settings, ({ one }) => ({

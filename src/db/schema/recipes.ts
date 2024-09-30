@@ -1,17 +1,17 @@
 import { relations } from "drizzle-orm";
-import { boolean, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { AnyPgColumn, boolean, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
-import { products } from "./products";
+import { goods } from "./goods";
 import { recipeHasConstituents } from "./recipeHasConstituents";
 import { tenants } from "./tenants";
 
 export const recipes = pgTable("recipes", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
     name: text("name"),
-    productId: uuid("product_id")
+    goodId: uuid("good_id")
         .notNull()
-        .references(() => products.id, { onDelete: "cascade" }),
-    isObsolete: boolean("is_obsolete").notNull().default(false),
+        .references(() => goods.id, { onDelete: "cascade", onUpdate: "cascade" }),
+    predecessorId: uuid("recipe_id").references((): AnyPgColumn => recipes.id),
     insertedAt: timestamp("inserted_at", {
         mode: "date",
         precision: 3,
@@ -29,15 +29,20 @@ export const recipes = pgTable("recipes", {
         .$onUpdate(() => new Date()),
     tenantId: uuid("tenant_id")
         .notNull()
-        .references(() => tenants.id, { onDelete: "cascade" }),
+        .references(() => tenants.id),
 });
 
 export const recipesRelations = relations(recipes, ({ one, many }) => ({
-    product: one(products, {
-        fields: [recipes.productId],
-        references: [products.id],
+    good: one(goods, {
+        fields: [recipes.goodId],
+        references: [goods.id],
     }),
     recipeHasConstituents: many(recipeHasConstituents),
+    predecessors: one(recipes, {
+        fields: [recipes.predecessorId],
+        references: [recipes.id],
+    }),
+    successors: many(recipes),
     tenant: one(tenants, {
         fields: [recipes.tenantId],
         references: [tenants.id],

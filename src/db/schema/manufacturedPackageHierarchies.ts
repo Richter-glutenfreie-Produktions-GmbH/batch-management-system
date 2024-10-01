@@ -20,9 +20,7 @@ export const manufacturedPackageHierarchies = pgTable("manufactured_package_hier
         .notNull()
         .defaultNow()
         .$onUpdate(() => new Date()),
-    tenantId: uuid("tenant_id")
-        .notNull()
-        .references(() => tenants.id),
+    tenantId: uuid("tenant_id").references(() => tenants.id),
 });
 
 export const manufacturedPackageHierarchiesRelations = relations(manufacturedPackageHierarchies, ({ one, many }) => ({

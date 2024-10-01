@@ -29,9 +29,7 @@ export const recipeHasConstituents = pgTable(
             .notNull()
             .defaultNow()
             .$onUpdate(() => new Date()),
-        tenantId: uuid("tenant_id")
-            .notNull()
-            .references(() => tenants.id),
+        tenantId: uuid("tenant_id").references(() => tenants.id),
     },
     (table) => ({
         pk: primaryKey(table.constituentId, table.recipeId),

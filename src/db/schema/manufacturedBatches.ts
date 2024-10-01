@@ -25,9 +25,7 @@ export const manufacturedBatches = pgTable("manufactured_batches", {
         .notNull()
         .defaultNow()
         .$onUpdate(() => new Date()),
-    tenantId: uuid("tenant_id")
-        .notNull()
-        .references(() => tenants.id),
+    tenantId: uuid("tenant_id").references(() => tenants.id),
 });
 
 export const manufacturedBatchesRelations = relations(manufacturedBatches, ({ one, many }) => ({

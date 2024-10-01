@@ -27,9 +27,7 @@ export const nestables = pgTable("nestables_bt", {
         .notNull()
         .defaultNow()
         .$onUpdate(() => new Date()),
-    tenantId: uuid("tenant_id")
-        .notNull()
-        .references(() => tenants.id),
+    tenantId: uuid("tenant_id").references(() => tenants.id),
 });
 
 export const nestablesRelations = relations(nestables, ({ one, many }) => ({

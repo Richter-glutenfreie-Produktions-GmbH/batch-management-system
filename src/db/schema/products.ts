@@ -26,9 +26,7 @@ export const products = pgTable("products", {
         .notNull()
         .defaultNow()
         .$onUpdate(() => new Date()),
-    tenantId: uuid("tenant_id")
-        .notNull()
-        .references(() => tenants.id),
+    tenantId: uuid("tenant_id").references(() => tenants.id),
 });
 
 export const productsRelations = relations(products, ({ one, many }) => ({

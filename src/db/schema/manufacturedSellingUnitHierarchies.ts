@@ -20,9 +20,7 @@ export const manufacturedSellingUnitHierarchies = pgTable("manufactured_selling_
         .notNull()
         .defaultNow()
         .$onUpdate(() => new Date()),
-    tenantId: uuid("tenant_id")
-        .notNull()
-        .references(() => tenants.id),
+    tenantId: uuid("tenant_id").references(() => tenants.id),
 });
 
 export const manufacturedSellingUnitHierarchiesRelations = relations(

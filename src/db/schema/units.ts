@@ -25,9 +25,7 @@ export const units = pgTable("units", {
         .notNull()
         .defaultNow()
         .$onUpdate(() => new Date()),
-    tenantId: uuid("tenant_id")
-        .notNull()
-        .references(() => tenants.id),
+    tenantId: uuid("tenant_id").references(() => tenants.id),
 });
 
 export const unitsRelations = relations(units, ({ one, many }) => ({

@@ -28,9 +28,7 @@ export const sellingUnitHierarchies = pgTable("selling_unit_hierarchies", {
         .notNull()
         .defaultNow()
         .$onUpdate(() => new Date()),
-    tenantId: uuid("tenant_id")
-        .notNull()
-        .references(() => tenants.id),
+    tenantId: uuid("tenant_id").references(() => tenants.id),
 });
 
 export const sellingUnitHierarchiesRelations = relations(sellingUnitHierarchies, ({ one, many }) => ({

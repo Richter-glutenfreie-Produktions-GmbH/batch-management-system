@@ -20,9 +20,7 @@ export const manufacturedSellingUnits = pgTable("manufactured_selling_units", {
         .notNull()
         .defaultNow()
         .$onUpdate(() => new Date()),
-    tenantId: uuid("tenant_id")
-        .notNull()
-        .references(() => tenants.id),
+    tenantId: uuid("tenant_id").references(() => tenants.id),
 });
 
 export const manufacturedSellingUnitsRelations = relations(manufacturedSellingUnits, ({ one, many }) => ({

@@ -26,9 +26,7 @@ export const receivedBatches = pgTable("received_batches", {
         .notNull()
         .defaultNow()
         .$onUpdate(() => new Date()),
-    tenantId: uuid("tenant_id")
-        .notNull()
-        .references(() => tenants.id),
+    tenantId: uuid("tenant_id").references(() => tenants.id),
 });
 
 export const receivedBatchesRelations = relations(receivedBatches, ({ one, many }) => ({

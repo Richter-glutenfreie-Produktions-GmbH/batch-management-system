@@ -20,9 +20,7 @@ export const manufacturedBundles = pgTable("manufactured_bundles_bt", {
         .notNull()
         .defaultNow()
         .$onUpdate(() => new Date()),
-    tenantId: uuid("tenant_id")
-        .notNull()
-        .references(() => tenants.id),
+    tenantId: uuid("tenant_id").references(() => tenants.id),
 });
 
 export const manufacturedBundlesRelations = relations(manufacturedBundles, ({ one, many }) => ({

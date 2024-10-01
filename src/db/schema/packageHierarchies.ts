@@ -28,9 +28,7 @@ export const packageHierarchies = pgTable("package_hierarchies", {
         .notNull()
         .defaultNow()
         .$onUpdate(() => new Date()),
-    tenantId: uuid("tenant_id")
-        .notNull()
-        .references(() => tenants.id),
+    tenantId: uuid("tenant_id").references(() => tenants.id),
 });
 
 export const packageHierarchiesRelations = relations(packageHierarchies, ({ one, many }) => ({

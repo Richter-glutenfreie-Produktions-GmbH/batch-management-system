@@ -20,9 +20,7 @@ export const manufacturedDoughs = pgTable("manufactured_doughs", {
         .notNull()
         .defaultNow()
         .$onUpdate(() => new Date()),
-    tenantId: uuid("tenant_id")
-        .notNull()
-        .references(() => tenants.id),
+    tenantId: uuid("tenant_id").references(() => tenants.id),
 });
 
 export const manufacturedDoughsRelations = relations(manufacturedDoughs, ({ one, many }) => ({

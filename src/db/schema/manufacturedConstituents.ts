@@ -2,9 +2,11 @@ import { relations } from "drizzle-orm";
 import { pgTable, timestamp, uuid } from "drizzle-orm/pg-core";
 
 import { tenants } from "./tenants";
+import { constituents } from "./constituents";
 
 export const manufacturedConstituents = pgTable("manufactured_constituents_bt", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
+    constituentId: uuid("id").notNull().references(() => constituents.id),
     insertedAt: timestamp("inserted_at", {
         mode: "date",
         precision: 3,
@@ -24,6 +26,10 @@ export const manufacturedConstituents = pgTable("manufactured_constituents_bt", 
 });
 
 export const manufacturedConstituentsRelations = relations(manufacturedConstituents, ({ one, many }) => ({
+    constituent: one(constituents, {
+        fields: [manufacturedConstituents.constituentId],
+        references: [constituents.id]
+    }),
     tenant: one(tenants, {
         fields: [manufacturedConstituents.tenantId],
         references: [tenants.id],

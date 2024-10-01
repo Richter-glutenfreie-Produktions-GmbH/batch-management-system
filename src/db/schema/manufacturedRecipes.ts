@@ -2,9 +2,11 @@ import { relations } from "drizzle-orm";
 import { pgTable, timestamp, uuid } from "drizzle-orm/pg-core";
 
 import { tenants } from "./tenants";
+import { recipes } from "./recipes";
 
 export const manufacturedRecipes = pgTable("manufactured_recipes", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
+    recipeId: uuid("id").notNull().references(() => recipes.id),
     insertedAt: timestamp("inserted_at", {
         mode: "date",
         precision: 3,
@@ -24,6 +26,10 @@ export const manufacturedRecipes = pgTable("manufactured_recipes", {
 });
 
 export const manufacturedRecipesRelations = relations(manufacturedRecipes, ({ one, many }) => ({
+    recipe: one(recipes, {
+        fields: [manufacturedRecipes.recipeId],
+        references: [recipes.id]
+    }),
     tenant: one(tenants, {
         fields: [manufacturedRecipes.tenantId],
         references: [tenants.id],

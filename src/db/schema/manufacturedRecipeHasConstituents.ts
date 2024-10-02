@@ -1,12 +1,13 @@
 import { relations } from "drizzle-orm";
 import { pgTable, primaryKey, timestamp, uuid } from "drizzle-orm/pg-core";
 
-import { tenants } from "./tenants";
 import { manufacturedConstituents } from "./manufacturedConstituents";
 import { manufacturedRecipes } from "./manufacturedRecipes";
+import { tenants } from "./tenants";
 
-export const manufacturedRecipeHasConstituents = pgTable("manufactured_recipe_has_constituents_jt", 
-    {    
+export const manufacturedRecipeHasConstituents = pgTable(
+    "manufactured_recipe_has_constituents_jt",
+    {
         manufacturedConstituentId: uuid("manufactured_constituent_id")
             .notNull()
             .references(() => manufacturedConstituents.id, { onDelete: "cascade", onUpdate: "cascade" }),
@@ -40,11 +41,11 @@ export const manufacturedRecipeHasConstituentsRelations = relations(
     ({ one, many }) => ({
         manufacturedConstituent: one(manufacturedConstituents, {
             fields: [manufacturedRecipeHasConstituents.manufacturedConstituentId],
-            references: [manufacturedConstituents.id]
+            references: [manufacturedConstituents.id],
         }),
         manufacturedRecipe: one(manufacturedRecipes, {
             fields: [manufacturedRecipeHasConstituents.manufacturedRecipeId],
-            references: [manufacturedRecipes.id]
+            references: [manufacturedRecipes.id],
         }),
         tenant: one(tenants, {
             fields: [manufacturedRecipeHasConstituents.tenantId],

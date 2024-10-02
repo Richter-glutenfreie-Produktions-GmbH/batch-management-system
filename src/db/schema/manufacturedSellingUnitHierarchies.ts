@@ -1,12 +1,14 @@
 import { relations } from "drizzle-orm";
 import { pgTable, timestamp, uuid } from "drizzle-orm/pg-core";
 
-import { tenants } from "./tenants";
 import { sellingUnitHierarchies } from "./sellingUnitHierarchies";
+import { tenants } from "./tenants";
 
 export const manufacturedSellingUnitHierarchies = pgTable("manufactured_selling_unit_hierarchies_bt", {
     id: uuid("id").notNull().primaryKey().defaultRandom(),
-    sellingUnitHierarchyId: uuid("id").notNull().references(() => sellingUnitHierarchies.id),
+    sellingUnitHierarchyId: uuid("id")
+        .notNull()
+        .references(() => sellingUnitHierarchies.id),
     insertedAt: timestamp("inserted_at", {
         mode: "date",
         precision: 3,
@@ -30,7 +32,7 @@ export const manufacturedSellingUnitHierarchiesRelations = relations(
     ({ one, many }) => ({
         sellingUnitHierarchy: one(sellingUnitHierarchies, {
             fields: [manufacturedSellingUnitHierarchies.sellingUnitHierarchyId],
-            references: [sellingUnitHierarchies.id]
+            references: [sellingUnitHierarchies.id],
         }),
         tenant: one(tenants, {
             fields: [manufacturedSellingUnitHierarchies.tenantId],

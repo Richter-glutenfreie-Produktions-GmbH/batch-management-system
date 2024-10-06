@@ -1,6 +1,7 @@
 import { relations } from "drizzle-orm";
 import { pgTable, timestamp, uuid } from "drizzle-orm/pg-core";
 
+import { manufacturedRecipeHasConstituents } from "./manufacturedRecipeHasConstituents";
 import { recipes } from "./recipes";
 import { tenants } from "./tenants";
 
@@ -32,6 +33,7 @@ export const manufacturedRecipesRelations = relations(manufacturedRecipes, ({ on
         fields: [manufacturedRecipes.recipeId],
         references: [recipes.id],
     }),
+    manufacturedRecipeHasConstituents: many(manufacturedRecipeHasConstituents),
     tenant: one(tenants, {
         fields: [manufacturedRecipes.tenantId],
         references: [tenants.id],

@@ -8,6 +8,19 @@ import { doughs } from "./doughs";
 import { goods } from "./goods";
 import { ingredients } from "./ingredients";
 import { manufacturedBatches } from "./manufacturedBatches";
+import { manufacturedBundles } from "./manufacturedBundles";
+import { manufacturedConstituents } from "./manufacturedConstituents";
+import { manufacturedDoughs } from "./manufacturedDoughs";
+import { manufacturedGoods } from "./manufacturedGoods";
+import { manufacturedNestables } from "./manufacturedNestables";
+import { manufacturedPackageHierarchies } from "./manufacturedPackageHierarchies";
+import { manufacturedPackages } from "./manufacturedPackages";
+import { manufacturedPalettes } from "./manufacturedPalettes";
+import { manufacturedProducts } from "./manufacturedProducts";
+import { manufacturedRecipeHasConstituents } from "./manufacturedRecipeHasConstituents";
+import { manufacturedRecipes } from "./manufacturedRecipes";
+import { manufacturedSellingUnitHierarchies } from "./manufacturedSellingUnitHierarchies";
+import { manufacturedSellingUnits } from "./manufacturedSellingUnits";
 import { nestables } from "./nestables";
 import { packageHierarchies } from "./packageHierarchies";
 import { packages } from "./packages";
@@ -52,6 +65,19 @@ export const tenantsRelations = relations(tenants, ({ one, many }) => ({
     goods: many(goods),
     ingredients: many(ingredients),
     manufacturedBatches: many(manufacturedBatches),
+    manufacturedBundles: many(manufacturedBundles),
+    manufacturedConstituents: many(manufacturedConstituents),
+    manufacturedDoughs: many(manufacturedDoughs),
+    manufacturedGoods: many(manufacturedGoods),
+    manufacturedNestables: many(manufacturedNestables),
+    manufacturedPackageHierarchies: many(manufacturedPackageHierarchies),
+    manufacturedPackages: many(manufacturedPackages),
+    manufacturedPalettes: many(manufacturedPalettes),
+    manufacturedProducts: many(manufacturedProducts),
+    manufacturedRecipeHasConstituents: many(manufacturedRecipeHasConstituents),
+    manufacturedRecipes: many(manufacturedRecipes),
+    manufacturedSellingUnitHierarchies: many(manufacturedSellingUnitHierarchies),
+    manufacturedSellingUnits: many(manufacturedSellingUnits),
     nestables: many(nestables),
     packageHierarchies: many(packageHierarchies),
     packages: many(packages),

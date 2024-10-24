@@ -1,10 +1,11 @@
 "use client";
 
 import { Link } from "@/i18n/routing";
-import { cn } from "@/lib/utils";
 import { Croissant, Fingerprint, ScrollText, Wheat } from "lucide-react";
 import { useTranslations } from "next-intl";
 import * as React from "react";
+
+import { cn } from "@/components/lib/utils";
 
 import {
     NavigationMenu,

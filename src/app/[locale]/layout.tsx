@@ -5,8 +5,10 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
 
-import Footer from "@/components/footer";
-import { Header } from "@/components/header";
+import AppHeader from "@/components/app-header";
+import { AppSidebar } from "@/components/app-sidebar";
+
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 const defaultUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
 
@@ -30,9 +32,13 @@ export default async function RootLayout({
             <body className="bg-background text-foreground h-full relative">
                 <NextIntlClientProvider messages={messages}>
                     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-                        <Header />
-                        <div className="h-[80vh]">{children}</div>
-                        <Footer />
+                        <SidebarProvider>
+                            <AppSidebar />
+                            <SidebarInset>
+                                <AppHeader />
+                                {children}
+                            </SidebarInset>
+                        </SidebarProvider>
                     </ThemeProvider>
                 </NextIntlClientProvider>
             </body>
